@@ -1,5 +1,11 @@
 import { WordleIcon } from './wordle-icon';
 
+const shareMessage = `Wordle 1,342 3/6
+
+🟨⬛⬛⬛🟨
+🟩🟩🟩⬛⬛
+🟩🟩🟩🟩🟩`;
+
 export function End() {
   return (
     <div className="absolute inset-0 text-gray-100 flex flex-col items-center justify-center bg-neutral-900">
@@ -13,10 +19,7 @@ export function End() {
       <button
         className="w-40 h-12 py-2 px-4 bg-gray-100 text-black rounded-full border border-black"
         onClick={() => {
-          navigator.clipboard.writeText(
-            `Wordle 1
-             🟩🟨⬜️⬛️`,
-          );
+          navigator.clipboard.writeText(shareMessage);
         }}
       >
         Share
