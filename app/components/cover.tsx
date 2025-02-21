@@ -7,9 +7,10 @@ export function Cover({ setStarted }: { setStarted: (started: boolean) => void }
         <WordleIcon />
       </div>
 
-      <div className="text-4xl font-extrabold mb-3">Wordle</div>
+      <div className="text-4xl font-extrabold mb-3">Wordle War</div>
       <div className="text-2xl font-light text-center mb-8">
-        Get 6 chances to guess a 5-letter word.
+        {/* Get 6 chances to guess a 5-letter word. */}
+        First winner picks tomorrow's word.
       </div>
 
       <div className="flex flex-col gap-2">
@@ -22,7 +23,7 @@ export function Cover({ setStarted }: { setStarted: (started: boolean) => void }
         <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
           Log in
         </button>
-        <button className="w-40 h-12  py-2 px-4 text-black rounded-full border border-black">
+        <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
           Subscribe
         </button>
       </div>
