@@ -2,9 +2,6 @@ import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
 
 export function Keyboard() {
-  const { guesses, currentRow, currentLetter, gameOver, setGuesses, setCurrentRow } =
-    useGameContext();
-
   return (
     <div
       className="flex w-full flex-col 
@@ -55,6 +52,8 @@ const KeyboardRow = ({ children }: { children: React.ReactNode }) => {
 };
 
 const KeyboardKey = ({ keyLabel, special }: { keyLabel: string; special?: boolean }) => {
+  const { guesses, currentRow, currentLetter, gameOver, setGuesses, setCurrentRow } =
+    useGameContext();
   return (
     <div
       //
@@ -62,6 +61,7 @@ const KeyboardKey = ({ keyLabel, special }: { keyLabel: string; special?: boolea
         special ? 'w-12' : 'w-8',
         special ? 'text-sm tracking-tighter' : 'text-lg',
         'flex h-12 items-center justify-center bg-gray-400 text-white',
+        guesses[currentRow][currentLetter] === keyLabel && 'bg-green-500',
       )}
     >
       {keyLabel}
