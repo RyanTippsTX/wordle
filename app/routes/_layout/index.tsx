@@ -76,15 +76,19 @@ function Home() {
   }
 
   return (
-    <div>
+    <>
       <div className="absolute top-12 left-0 text-xs">
         <pre>{JSON.stringify(guesses, null, 2)}</pre>
       </div>
-      <Board />
-      <Keyboard />
+      <div className="pt-2">
+        <Board />
+      </div>
+      <div className="pt-2">
+        <Keyboard />
+      </div>
       {/* <div className="p-4 absolute right-0 top-0">
         <button onClick={() => setShowEnd(true)}>Show end</button>
       </div> */}
-    </div>
+    </>
   );
 }

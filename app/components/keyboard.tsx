@@ -60,7 +60,7 @@ const KeyboardKey = ({ keyLabel, special }: { keyLabel: string; special?: boolea
       className={twMerge(
         special ? 'w-12' : 'w-8',
         special ? 'text-sm tracking-tighter' : 'text-lg',
-        'flex h-12 items-center justify-center bg-gray-400 text-white',
+        'flex h-12 items-center justify-center bg-neutral-400 text-white font-bold rounded',
         guesses[currentRow][currentLetter] === keyLabel && 'bg-green-500',
       )}
     >
