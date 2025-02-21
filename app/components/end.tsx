@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { WordleIcon } from './wordle-icon';
 import { twMerge } from 'tailwind-merge';
 
-const shareMessage = `Wordle 1,342 3/6
+const shareMessage = `Wordle War 1,234 3/6
+Cameron's word
 
 🟨⬛⬛⬛🟨
 🟩🟩🟩⬛⬛

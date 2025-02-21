@@ -1,12 +1,10 @@
-import Head from 'next/head';
-
-const title = 'Wordle';
-const description = 'a word puzzle game';
+const title = 'Wordle War';
+const description = "First winner picks tomorrow's word.";
 
 export function Layout({ children }: { children: React.ReactNode | React.ReactNode[] }) {
   return (
     <>
-      <Head>
+      <div>
         <title>{title}</title>
         <meta name="description" content={description} />
         <link
@@ -20,7 +18,7 @@ export function Layout({ children }: { children: React.ReactNode | React.ReactNo
         <meta property="og:description" content={description} />
         {/* <meta property="og:url" content="my-wordle-game.com" /> */}
         {/* <meta property="og:type" content="website" /> */}
-      </Head>
+      </div>
 
       <main className="flex min-h-screen flex-col items-center justify-start">
         <div className="flex min-h-screen flex-col items-center justify-start gap-y-8 pb-4 pt-8">
