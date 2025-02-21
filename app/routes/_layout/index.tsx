@@ -32,6 +32,11 @@ function Home() {
   } = useGameContext();
 
   const handleKeyPress = (e: KeyboardEvent) => {
+    // ignore modifier keys
+    if (e.metaKey || e.altKey || e.ctrlKey) {
+      return;
+    }
+
     // letters
     if (letters.includes(e.key)) {
       if (currentLetter < 5) {
