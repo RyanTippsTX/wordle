@@ -1,4 +1,5 @@
 import { Link, Outlet, createFileRoute } from '@tanstack/react-router';
+import { GameProvider } from '~/context/GameContext';
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -6,10 +7,10 @@ export const Route = createFileRoute('/_layout')({
 
 function LayoutComponent() {
   return (
-    <div>
+    <GameProvider>
       <Nav />
       <Outlet />
-    </div>
+    </GameProvider>
   );
 }
 

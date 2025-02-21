@@ -1,6 +1,10 @@
 import { twMerge } from 'tailwind-merge';
+import { useGameContext } from '~/context/GameContext';
 
 export function Keyboard() {
+  const { guesses, currentRow, currentLetter, gameOver, setGuesses, setCurrentRow } =
+    useGameContext();
+
   return (
     <div
       className="flex w-full flex-col 

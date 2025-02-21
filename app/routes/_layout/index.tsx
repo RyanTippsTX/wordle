@@ -4,6 +4,7 @@ import { Board } from '~/components/board';
 import { Cover } from '~/components/cover';
 import { End } from '~/components/end';
 import { Keyboard } from '~/components/keyboard';
+import { GameProvider, useGameContext } from '~/context/GameContext';
 // import { createUrl } from '~/utils/urlStore';
 
 // defines the page content at the given route
@@ -12,24 +13,23 @@ export const Route = createFileRoute('/_layout/')({
   // loader: async () => await getCount(), // equivalent of getSSProps
 });
 
-const newGameState = [[], [], [], [], [], []];
-
+const letters = 'abcdefghijklmnopqrstuvwxyz';
 function Home() {
   // const router = useRouter();
   // const state = Route.useLoaderData();
 
   // menus
   const [started, setStarted] = useState(false);
-  // const [showEnd, setShowEnd] = useState(false);
 
-  // game state
-  const solution = 'hello'; // temp
-  const letters = 'abcdefghijklmnopqrstuvwxyz';
-  const [guesses, setGuesses] = useState<string[][]>(newGameState);
-  console.log('🔥 guesses', guesses);
-  const [currentRow, setCurrentRow] = useState(0);
-  const currentLetter = guesses[currentRow]?.length;
-  const gameOver = currentRow === 6;
+  const {
+    // game state
+    guesses,
+    currentRow,
+    currentLetter,
+    gameOver,
+    setGuesses,
+    setCurrentRow,
+  } = useGameContext();
 
   const handleKeyPress = (e: KeyboardEvent) => {
     // letters
@@ -57,12 +57,6 @@ function Home() {
       if (currentLetter === 5) {
         setCurrentRow(currentRow + 1);
       }
-    }
-  };
-
-  const handleEnter = () => {
-    if (currentLetter === 5) {
-      setGuesses(guesses.map((row, i) => (i === currentRow ? [] : row)));
     }
   };
 
