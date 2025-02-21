@@ -2,33 +2,41 @@ import { WordleIcon } from './wordle-icon';
 
 export function Cover({ setStarted }: { setStarted: (started: boolean) => void }) {
   return (
-    <div className="text-black flex flex-col items-center justify-center h-screen bg-gray-100">
-      <WordleIcon />
+    <div className="absolute inset-0 text-black flex flex-col items-center justify-center bg-gray-100">
+      <div className="mb-3 w-16 h-16 flex items-center justify-center">
+        <WordleIcon />
+      </div>
 
-      <div className="text-4xl font-bold mb-2">Wordle</div>
-      <p className="text-center mb-8">Get 6 chances to guess a 5-letter word.</p>
+      <div className="text-4xl font-extrabold mb-3">Wordle</div>
+      <div className="text-2xl font-light text-center mb-8">
+        Get 6 chances to guess a 5-letter word.
+      </div>
 
-      <div className="flex flex-col gap-2 w-full max-w-xs">
+      <div className="flex flex-col gap-2">
         <button
-          className="w-full py-2 px-4 bg-black text-white rounded"
+          className="w-40 h-12 py-2 px-4 bg-black text-white rounded-full border border-black"
           onClick={() => setStarted(true)}
         >
           Play
         </button>
-        <button className="w-full py-2 px-4 bg-gray-200 text-black rounded">Log in</button>
-        <button className="w-full py-2 px-4 bg-gray-200 text-black rounded">Subscribe</button>
+        <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
+          Log in
+        </button>
+        <button className="w-40 h-12  py-2 px-4 text-black rounded-full border border-black">
+          Subscribe
+        </button>
       </div>
 
       <div className="mt-8 text-center">
-        <div>
+        <div className="font-semibold text-sm">
           {new Date().toLocaleDateString('en-US', {
             month: 'long',
             day: 'numeric',
             year: 'numeric',
           })}
         </div>
-        <div className="text-sm text-gray-600">No. 1</div>
-        <div className="text-sm text-gray-600">Edited by Ryan Tipps</div>
+        <div className="text-sm">No. 1</div>
+        <div className="text-sm">Edited by Ryan Tipps</div>
       </div>
     </div>
   );
