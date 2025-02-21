@@ -1,0 +1,15 @@
+node_modules
+package-lock.json
+.env
+
+.DS_Store
+
+# build artifacts
+app.config.timestamp_*.js
+.output
+.vinxi
+/dist
+/build/
+/api/
+/server/build
+/public/build
