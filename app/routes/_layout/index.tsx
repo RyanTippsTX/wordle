@@ -33,6 +33,9 @@ function Home() {
     <div>
       <Board />
       <Keyboard />
+      <div className="p-4 absolute right-0 top-0">
+        <button onClick={() => setShowEnd(true)}>Show end</button>
+      </div>
     </div>
   );
 }

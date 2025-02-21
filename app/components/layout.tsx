@@ -1,13 +1,9 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-const title = "Wordle";
-const description = "a word puzzle game";
+const title = 'Wordle';
+const description = 'a word puzzle game';
 
-export function Layout({
-  children,
-}: {
-  children: React.ReactNode | React.ReactNode[];
-}) {
+export function Layout({ children }: { children: React.ReactNode | React.ReactNode[] }) {
   return (
     <>
       <Head>
