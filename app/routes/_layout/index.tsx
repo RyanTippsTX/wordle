@@ -24,6 +24,7 @@ function Home() {
     currentRow,
     currentLetter,
     gameOver,
+    showEnd,
     setGuesses,
     setCurrentRow,
     handleKeyPress,
@@ -40,7 +41,7 @@ function Home() {
     return <Cover />;
   }
 
-  if (gameOver) {
+  if (gameOver && showEnd) {
     return <End />;
   }
 
@@ -55,9 +56,6 @@ function Home() {
       <div className="pt-2">
         <Keyboard />
       </div>
-      {/* <div className="p-4 absolute right-0 top-0">
-        <button onClick={() => setShowEnd(true)}>Show end</button>
-      </div> */}
     </>
   );
 }

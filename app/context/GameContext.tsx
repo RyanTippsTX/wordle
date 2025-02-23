@@ -10,6 +10,8 @@ interface GameState {
   currentRow: number;
   currentLetter: number;
   gameOver: boolean;
+  showEnd: boolean;
+  setShowEnd: (showEnd: boolean) => void;
   setGuesses: React.Dispatch<React.SetStateAction<string[][]>>;
   setCurrentRow: React.Dispatch<React.SetStateAction<number>>;
   handleKeyPress: (e: KeyboardEvent) => void;
@@ -27,7 +29,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [currentRow, setCurrentRow] = useState(0);
   const currentLetter = guesses[currentRow]?.length;
   const gameOver = currentRow === 6;
-
+  const [showEnd, setShowEnd] = useState(true);
   const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
   const guessedLetters = new Set(pastGuesses.flat());
 
@@ -85,6 +87,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         guessedLetters,
         started,
         setStarted,
+        showEnd,
+        setShowEnd,
         pastGuesses,
         guesses,
         currentRow,
