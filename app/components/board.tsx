@@ -5,7 +5,7 @@ export function Board() {
   const { guesses, currentRow, currentLetter } = useGameContext();
   return (
     <div
-      className="flex w-full flex-col 
+      className="flex h-full w-full flex-col 
         items-center justify-center
         space-y-1
         "
@@ -52,7 +52,7 @@ const Square = ({
     <div
       //
       className={twMerge(
-        'flex h-12 w-12 items-center justify-center text-sm tracking-tighter border-2 border-neutral-700',
+        'flex h-16 w-16 items-center justify-center text-sm tracking-tighter border-2 border-neutral-700',
         showColors && (isCorrect ? 'bg-green-500' : isPresent ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
     >

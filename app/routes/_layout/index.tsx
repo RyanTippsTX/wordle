@@ -46,16 +46,27 @@ function Home() {
   }
 
   return (
-    <>
-      <div className="absolute top-12 left-0 text-xs">
+    <div className="flex flex-col items-center justify-between h-full w-full">
+      {/* <div className="absolute top-12 left-0 text-xs">
         <pre>{JSON.stringify(guesses, null, 2)}</pre>
-      </div>
-      <div className="pt-2">
+      </div> */}
+      <Nav />
+      <div className="pt-2 flex-1">
         <Board />
       </div>
-      <div className="pt-2">
+      <div className="py-2">
         <Keyboard />
       </div>
-    </>
+    </div>
   );
 }
+
+const Nav = () => (
+  <nav className="w-full text-base bg-neutral-900 border-b border-neutral-700">
+    <div className="max-w-3xl mx-auto px-4 py-2 flex gap-2 items-center justify-center">
+      <Brand />
+    </div>
+  </nav>
+);
+
+const Brand = () => <div className="font-bold text-lg tracking-tight select-none">Wordle War</div>;
