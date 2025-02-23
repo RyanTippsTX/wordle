@@ -8,7 +8,7 @@ export function Cover({ setStarted }: { setStarted: (started: boolean) => void }
       </div>
 
       <div className="text-4xl font-bold mb-3 font-patua tracking-tight">Wordle War</div>
-      <div className="text-2xl font-light text-center mb-8">
+      <div className="text-2xl font-light text-center mb-8 mx-4">
         {/* Get 6 chances to guess a 5-letter word. */}
         First winner picks tomorrow's word.
       </div>
