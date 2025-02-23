@@ -71,8 +71,6 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
     guess.some((letter, index) => letter === thisKey && wordle[index] === letter),
   );
 
-  console.log('🔥 key', { eventKey: thisKey, isGuessed, isInWordle, isCorrect });
-
   return (
     <div
       //
