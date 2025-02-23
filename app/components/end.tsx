@@ -30,7 +30,7 @@ export function End() {
         <WordleIcon />
       </div>
 
-      <div className="text-4xl font-extrabold mb-3">Thanks for playing today!</div>
+      <div className="text-4xl font-extrabold mb-3 text-center">Thanks for playing today!</div>
       <div className="text-2xl font-light text-center mb-8">See you tomorrow?</div>
 
       <button
