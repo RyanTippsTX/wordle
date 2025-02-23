@@ -27,6 +27,11 @@ export const Route = createRootRoute({
       {
         title: 'Wordle War',
       },
+      {
+        // disable zoom on mobile when clicking on text
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+      },
     ],
     links: [
       {

@@ -62,6 +62,7 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
     gameOver,
     setGuesses,
     setCurrentRow,
+    handleKeyPress,
   } = useGameContext();
 
   const isGuessed = guessedLetters.has(thisKey);
@@ -78,11 +79,12 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
       className={twMerge(
         special ? 'w-12' : 'w-8',
         special ? 'text-xs tracking-tighter' : 'text-lg',
-        'flex h-12 items-center justify-center bg-neutral-400 text-white font-bold rounded',
+        'flex h-12 items-center justify-center bg-neutral-400 text-white font-bold rounded cursor-pointer select-none',
         !special &&
           isGuessed &&
           (isCorrect ? 'bg-green-500' : isInWordle ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
+      onClick={() => handleKeyPress({ key: thisKey } as KeyboardEvent)} // dirty, fix later
     >
       {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? 'DELETE' : thisKey.toUpperCase()}
     </div>
