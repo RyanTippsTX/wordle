@@ -7,7 +7,7 @@ export function Board() {
     <div
       className="flex h-full w-full flex-col 
         items-center justify-center
-        space-y-1
+        space-y-1.5
         "
     >
       {guesses.map((guess, index) => (
@@ -22,10 +22,9 @@ const Row = ({ rowIndex }: { rowIndex: number }) => {
   const guess = guesses[rowIndex];
   const untypedLetters = 5 - guess.length;
   const letters = [...guess, ...Array(untypedLetters).fill(' ')];
-  const correctLetters = wordle.split('');
 
   return (
-    <div className="flex gap-x-1">
+    <div className="flex gap-x-1.5">
       {letters.map((letter, letterIndex) => (
         <Square key={letterIndex} letter={letter} letterIndex={letterIndex} rowIndex={rowIndex} />
       ))}
@@ -44,19 +43,23 @@ const Square = ({
 }) => {
   const { guesses, wordle, currentRow } = useGameContext();
   const correctLetter = wordle[letterIndex];
-  const isCorrect = letter === correctLetter;
-  const isPresent = wordle.includes(letter);
-  const showColors = currentRow > rowIndex;
+  const submitted = currentRow > rowIndex;
+  const isCorrect = submitted && letter === correctLetter;
+  const isPresent = submitted && wordle.includes(letter);
 
   return (
     <div
       //
       className={twMerge(
-        'flex h-16 w-16 items-center justify-center text-sm tracking-tighter border-2 border-neutral-700',
-        showColors && (isCorrect ? 'bg-green-500' : isPresent ? 'bg-yellow-500' : 'bg-neutral-700'),
+        'flex h-16 w-16 items-center justify-center text-3xl font-bold',
+        isCorrect
+          ? 'bg-green-500'
+          : isPresent
+            ? 'bg-yellow-500'
+            : 'bg-neutral-700 border-2 border-neutral-700',
       )}
     >
-      {letter}
+      {letter.toUpperCase()}
     </div>
   );
 };
