@@ -69,4 +69,6 @@ const Nav = () => (
   </nav>
 );
 
-const Brand = () => <div className="font-bold text-lg tracking-tight select-none">Wordle War</div>;
+const Brand = () => (
+  <div className="font-bold text-xl m-0.5 tracking-tight select-none font-patua">Wordle War</div>
+);
