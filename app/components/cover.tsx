@@ -21,10 +21,10 @@ export function Cover({ setStarted }: { setStarted: (started: boolean) => void }
           Play
         </button>
         <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
-          Log in
+          Rules
         </button>
         <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
-          Subscribe
+          Share
         </button>
       </div>
 
