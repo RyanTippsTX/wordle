@@ -2,6 +2,7 @@ import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
 
 export function Board() {
+  const { guesses, currentRow, currentLetter } = useGameContext();
   return (
     <div
       className="flex w-full flex-col 
@@ -9,35 +10,50 @@ export function Board() {
         space-y-1
         "
     >
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
+      {guesses.map((guess, index) => (
+        <Row key={index} rowIndex={index} />
+      ))}
     </div>
   );
 }
 
-const Row = ({ word }: { word?: string }) => {
-  const letters = word?.split('') || '';
+const Row = ({ rowIndex }: { rowIndex: number }) => {
+  const { guesses, wordle } = useGameContext();
+  const guess = guesses[rowIndex];
+  const untypedLetters = 5 - guess.length;
+  const letters = [...guess, ...Array(untypedLetters).fill(' ')];
+  const correctLetters = wordle.split('');
+
   return (
     <div className="flex gap-x-1">
-      <Square letter={letters[0] || ''} />
-      <Square letter="" />
-      <Square letter="" />
-      <Square letter="" />
-      <Square letter="" />
+      {letters.map((letter, letterIndex) => (
+        <Square key={letterIndex} letter={letter} letterIndex={letterIndex} rowIndex={rowIndex} />
+      ))}
     </div>
   );
 };
 
-const Square = ({ letter, state }: { letter: string; state?: 'yellow' | 'green' | 'gray' }) => {
+const Square = ({
+  letter,
+  letterIndex,
+  rowIndex,
+}: {
+  letter: string;
+  letterIndex: number;
+  rowIndex: number;
+}) => {
+  const { guesses, wordle, currentRow } = useGameContext();
+  const correctLetter = wordle[letterIndex];
+  const isCorrect = letter === correctLetter;
+  const isPresent = wordle.includes(letter);
+  const showColors = currentRow > rowIndex;
+
   return (
     <div
       //
       className={twMerge(
         'flex h-12 w-12 items-center justify-center text-sm tracking-tighter border-2 border-neutral-700',
+        showColors && (isCorrect ? 'bg-green-500' : isPresent ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
     >
       {letter}

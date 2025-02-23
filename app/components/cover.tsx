@@ -1,6 +1,8 @@
+import { useGameContext } from '~/context/GameContext';
 import { WordleIcon } from './wordle-icon';
 
-export function Cover({ setStarted }: { setStarted: (started: boolean) => void }) {
+export function Cover() {
+  const { setStarted } = useGameContext();
   return (
     <div className="absolute inset-0 text-black flex flex-col items-center justify-center bg-gray-100">
       <div className="mb-3 w-16 h-16 flex items-center justify-center">

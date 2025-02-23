@@ -13,67 +13,31 @@ export const Route = createFileRoute('/_layout/')({
   // loader: async () => await getCount(), // equivalent of getSSProps
 });
 
-const letters = 'abcdefghijklmnopqrstuvwxyz';
 function Home() {
   // const router = useRouter();
   // const state = Route.useLoaderData();
 
-  // menus
-  const [started, setStarted] = useState(false);
-
   const {
-    // game state
+    started,
+    setStarted,
     guesses,
     currentRow,
     currentLetter,
     gameOver,
     setGuesses,
     setCurrentRow,
+    handleKeyPress,
   } = useGameContext();
-
-  const handleKeyPress = (e: KeyboardEvent) => {
-    // ignore modifier keys
-    if (e.metaKey || e.altKey || e.ctrlKey) {
-      return;
-    }
-
-    // letters
-    if (letters.includes(e.key)) {
-      if (currentLetter < 5) {
-        setGuesses((prev) => {
-          const newGuesses = [...prev];
-          newGuesses[currentRow][currentLetter] = e.key;
-          return newGuesses;
-        });
-      }
-    }
-
-    // delete
-    if (e.key === 'Backspace') {
-      setGuesses((prev) => {
-        const newGuesses = [...prev];
-        newGuesses[currentRow][currentLetter - 1] = '';
-        return newGuesses;
-      });
-    }
-
-    // enter
-    if (e.key === 'Enter') {
-      if (currentLetter === 5) {
-        setCurrentRow(currentRow + 1);
-      }
-    }
-  };
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [currentLetter]);
+  }, [handleKeyPress]);
 
   if (!started) {
-    return <Cover setStarted={setStarted} />;
+    return <Cover />;
   }
 
   if (gameOver) {
