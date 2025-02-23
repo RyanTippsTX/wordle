@@ -54,7 +54,7 @@ function Home() {
       <div className="pt-2 flex-1">
         <Board />
       </div>
-      <div className="py-2">
+      <div className="p-2 w-full">
         <Keyboard />
       </div>
     </div>

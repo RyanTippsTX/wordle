@@ -1,13 +1,13 @@
 import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
+import { Delete } from 'lucide-react';
 
 export function Keyboard() {
   return (
     <div
-      className="flex w-full flex-col 
-        items-center justify-center
-        space-y-1
-        "
+      className="w-full max-w-md
+        flex flex-col items-center justify-center
+        mx-auto space-y-1.5"
     >
       <KeyboardRow>
         <KeyboardKey eventKey="q" />
@@ -19,9 +19,10 @@ export function Keyboard() {
         <KeyboardKey eventKey="u" />
         <KeyboardKey eventKey="i" />
         <KeyboardKey eventKey="o" />
-        <KeyboardKey eventKey="p" />
+        <KeyboardKey eventKey="p" last />
       </KeyboardRow>
       <KeyboardRow>
+        <KeyboardDeadSpace />
         <KeyboardKey eventKey="a" />
         <KeyboardKey eventKey="s" />
         <KeyboardKey eventKey="d" />
@@ -30,7 +31,8 @@ export function Keyboard() {
         <KeyboardKey eventKey="h" />
         <KeyboardKey eventKey="j" />
         <KeyboardKey eventKey="k" />
-        <KeyboardKey eventKey="l" />
+        <KeyboardKey eventKey="l" last />
+        <KeyboardDeadSpace />
       </KeyboardRow>
       <KeyboardRow>
         <KeyboardKey eventKey="Enter" special />
@@ -41,17 +43,29 @@ export function Keyboard() {
         <KeyboardKey eventKey="b" />
         <KeyboardKey eventKey="n" />
         <KeyboardKey eventKey="m" />
-        <KeyboardKey eventKey="Backspace" special />
+        <KeyboardKey eventKey="Backspace" special last />
       </KeyboardRow>
     </div>
   );
 }
 
 const KeyboardRow = ({ children }: { children: React.ReactNode }) => {
-  return <div className="flex gap-x-1">{children}</div>;
+  return <div className="flex w-full h-14">{children}</div>;
 };
 
-const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special?: boolean }) => {
+const KeyboardDeadSpace = () => {
+  return <div className="flex-[0.5_1_0%]" />;
+};
+
+const KeyboardKey = ({
+  eventKey: thisKey,
+  special,
+  last,
+}: {
+  eventKey: string;
+  special?: boolean;
+  last?: boolean;
+}) => {
   const {
     wordle,
     guessedLetters,
@@ -75,16 +89,17 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
     <div
       //
       className={twMerge(
-        special ? 'w-12' : 'w-8',
+        !last && 'mr-1.5',
+        special ? 'flex-[1.5_1_0%]' : 'flex-1',
         special ? 'text-xs tracking-tighter' : 'text-lg',
-        'flex h-12 items-center justify-center bg-neutral-400 text-white font-bold rounded cursor-pointer select-none',
+        'h-full flex items-center justify-center bg-neutral-400 text-white font-bold rounded cursor-pointer select-none',
         !special &&
           isGuessed &&
           (isCorrect ? 'bg-green-500' : isInWordle ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
       onClick={() => handleKeyPress({ key: thisKey } as KeyboardEvent)} // dirty, fix later
     >
-      {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? 'DELETE' : thisKey.toUpperCase()}
+      {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? <Delete /> : thisKey.toUpperCase()}
     </div>
   );
 };
