@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, ReactNode, useCallback } fr
 
 interface GameState {
   wordle: string;
+  guessedLetters: Set<string>;
   started: boolean;
   setStarted: (started: boolean) => void;
   guesses: string[][];
@@ -26,12 +27,18 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const currentLetter = guesses[currentRow]?.length;
   const gameOver = currentRow === 6;
 
+  const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow).flat() : [];
+  const guessedLetters = new Set(pastGuesses);
+
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      console.log('🔥 e', e);
-      console.log('🔥 started', started);
       // ignore until game starts
       if (!started) {
+        return;
+      }
+
+      // ignore after game over
+      if (gameOver) {
         return;
       }
 
@@ -51,20 +58,20 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         }
       }
 
-      // delete
-      if (e.key === 'Backspace') {
-        setGuesses((prev) => {
-          const newGuesses = [...prev];
-          newGuesses[currentRow][currentLetter - 1] = '';
-          return newGuesses;
-        });
-      }
-
       // enter
       if (e.key === 'Enter') {
         if (currentLetter === 5) {
           setCurrentRow(currentRow + 1);
         }
+      }
+
+      // delete
+      if (e.key === 'Backspace') {
+        setGuesses((prev) => {
+          const newGuesses = [...prev];
+          newGuesses[currentRow] = newGuesses[currentRow].slice(0, -1);
+          return newGuesses;
+        });
       }
     },
     [currentLetter, currentRow, setGuesses, setCurrentRow, started],
@@ -74,6 +81,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     <GameContext.Provider
       value={{
         wordle,
+        guessedLetters,
         started,
         setStarted,
         guesses,
