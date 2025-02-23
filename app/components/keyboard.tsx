@@ -10,38 +10,38 @@ export function Keyboard() {
         "
     >
       <KeyboardRow>
-        <KeyboardKey keyLabel="Q" />
-        <KeyboardKey keyLabel="W" />
-        <KeyboardKey keyLabel="E" />
-        <KeyboardKey keyLabel="R" />
-        <KeyboardKey keyLabel="T" />
-        <KeyboardKey keyLabel="Y" />
-        <KeyboardKey keyLabel="U" />
-        <KeyboardKey keyLabel="I" />
-        <KeyboardKey keyLabel="O" />
-        <KeyboardKey keyLabel="P" />
+        <KeyboardKey eventKey="q" />
+        <KeyboardKey eventKey="w" />
+        <KeyboardKey eventKey="e" />
+        <KeyboardKey eventKey="r" />
+        <KeyboardKey eventKey="t" />
+        <KeyboardKey eventKey="y" />
+        <KeyboardKey eventKey="u" />
+        <KeyboardKey eventKey="i" />
+        <KeyboardKey eventKey="o" />
+        <KeyboardKey eventKey="p" />
       </KeyboardRow>
       <KeyboardRow>
-        <KeyboardKey keyLabel="A" />
-        <KeyboardKey keyLabel="S" />
-        <KeyboardKey keyLabel="D" />
-        <KeyboardKey keyLabel="F" />
-        <KeyboardKey keyLabel="G" />
-        <KeyboardKey keyLabel="H" />
-        <KeyboardKey keyLabel="J" />
-        <KeyboardKey keyLabel="K" />
-        <KeyboardKey keyLabel="L" />
+        <KeyboardKey eventKey="a" />
+        <KeyboardKey eventKey="s" />
+        <KeyboardKey eventKey="d" />
+        <KeyboardKey eventKey="f" />
+        <KeyboardKey eventKey="g" />
+        <KeyboardKey eventKey="h" />
+        <KeyboardKey eventKey="j" />
+        <KeyboardKey eventKey="k" />
+        <KeyboardKey eventKey="l" />
       </KeyboardRow>
       <KeyboardRow>
-        <KeyboardKey keyLabel="ENTER" special />
-        <KeyboardKey keyLabel="Z" />
-        <KeyboardKey keyLabel="X" />
-        <KeyboardKey keyLabel="C" />
-        <KeyboardKey keyLabel="V" />
-        <KeyboardKey keyLabel="B" />
-        <KeyboardKey keyLabel="N" />
-        <KeyboardKey keyLabel="M" />
-        <KeyboardKey keyLabel="DELETE" special />
+        <KeyboardKey eventKey="Enter" special />
+        <KeyboardKey eventKey="z" />
+        <KeyboardKey eventKey="x" />
+        <KeyboardKey eventKey="c" />
+        <KeyboardKey eventKey="v" />
+        <KeyboardKey eventKey="b" />
+        <KeyboardKey eventKey="n" />
+        <KeyboardKey eventKey="m" />
+        <KeyboardKey eventKey="Backspace" special />
       </KeyboardRow>
     </div>
   );
@@ -51,20 +51,43 @@ const KeyboardRow = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex gap-x-1">{children}</div>;
 };
 
-const KeyboardKey = ({ keyLabel, special }: { keyLabel: string; special?: boolean }) => {
-  const { guesses, currentRow, currentLetter, gameOver, setGuesses, setCurrentRow } =
-    useGameContext();
+const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special?: boolean }) => {
+  const {
+    wordle,
+    guessedLetters,
+    guesses,
+    currentRow,
+    currentLetter,
+    gameOver,
+    setGuesses,
+    setCurrentRow,
+  } = useGameContext();
+
+  const isGuessed = guessedLetters.has(thisKey);
+  const isInWordle = wordle.includes(thisKey);
+  const isCorrect =
+    currentRow > 0 &&
+    guesses
+      .slice(0, currentRow - 1)
+      .some((guess) =>
+        guess.some((letter, index) => letter === thisKey && wordle[index] === letter),
+      );
+
+  console.log('🔥 key', { eventKey: thisKey, isGuessed, isInWordle, isCorrect });
+
   return (
     <div
       //
       className={twMerge(
         special ? 'w-12' : 'w-8',
-        special ? 'text-sm tracking-tighter' : 'text-lg',
+        special ? 'text-xs tracking-tighter' : 'text-lg',
         'flex h-12 items-center justify-center bg-neutral-400 text-white font-bold rounded',
-        guesses[currentRow][currentLetter] === keyLabel && 'bg-green-500',
+        !special && isGuessed && 'bg-neutral-700',
+        !special && isGuessed && isInWordle && 'bg-yellow-500',
+        !special && isGuessed && isCorrect && 'bg-green-500',
       )}
     >
-      {keyLabel}
+      {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? 'DELETE' : thisKey.toUpperCase()}
     </div>
   );
 };

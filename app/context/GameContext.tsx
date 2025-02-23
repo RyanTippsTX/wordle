@@ -48,11 +48,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       }
 
       // letters
-      if (letters.includes(e.key)) {
+      if (letters.includes(e.key.toLowerCase())) {
         if (currentLetter < 5) {
           setGuesses((prev) => {
             const newGuesses = [...prev];
-            newGuesses[currentRow][currentLetter] = e.key;
+            newGuesses[currentRow][currentLetter] = e.key.toLowerCase();
             return newGuesses;
           });
         }
