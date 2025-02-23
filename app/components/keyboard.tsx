@@ -56,6 +56,7 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
     wordle,
     guessedLetters,
     guesses,
+    pastGuesses,
     currentRow,
     currentLetter,
     gameOver,
@@ -65,13 +66,9 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
 
   const isGuessed = guessedLetters.has(thisKey);
   const isInWordle = wordle.includes(thisKey);
-  const isCorrect =
-    currentRow > 0 &&
-    guesses
-      .slice(0, currentRow - 1)
-      .some((guess) =>
-        guess.some((letter, index) => letter === thisKey && wordle[index] === letter),
-      );
+  const isCorrect = pastGuesses.some((guess) =>
+    guess.some((letter, index) => letter === thisKey && wordle[index] === letter),
+  );
 
   console.log('🔥 key', { eventKey: thisKey, isGuessed, isInWordle, isCorrect });
 
@@ -82,9 +79,9 @@ const KeyboardKey = ({ eventKey: thisKey, special }: { eventKey: string; special
         special ? 'w-12' : 'w-8',
         special ? 'text-xs tracking-tighter' : 'text-lg',
         'flex h-12 items-center justify-center bg-neutral-400 text-white font-bold rounded',
-        !special && isGuessed && 'bg-neutral-700',
-        !special && isGuessed && isInWordle && 'bg-yellow-500',
-        !special && isGuessed && isCorrect && 'bg-green-500',
+        !special &&
+          isGuessed &&
+          (isCorrect ? 'bg-green-500' : isInWordle ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
     >
       {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? 'DELETE' : thisKey.toUpperCase()}
