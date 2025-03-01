@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { isValidWord } from '~/utils/wordValidation';
 
 interface GameState {
   wordle: string;
@@ -64,7 +65,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       // enter
       if (e.key === 'Enter') {
         if (currentLetter === 5) {
-          setCurrentRow(currentRow + 1);
+          // check if word is valid
+          const currentGuess = guesses[currentRow].join('');
+          if (isValidWord(currentGuess)) {
+            setCurrentRow(currentRow + 1);
+          } else {
+            console.log(`Invalid word: ${currentGuess}`);
+          }
         }
       }
 
@@ -77,7 +84,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     },
-    [currentLetter, currentRow, setGuesses, setCurrentRow, started],
+    [currentLetter, currentRow, setGuesses, setCurrentRow, started, gameOver, guesses],
   );
 
   return (
