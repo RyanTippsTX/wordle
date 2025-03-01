@@ -51,7 +51,7 @@ const Square = ({
     <div
       //
       className={twMerge(
-        'flex h-16 w-16 items-center justify-center text-3xl font-bold',
+        'flex aspect-square w-14 sm:w-16 items-center justify-center text-3xl font-bold',
         isCorrect
           ? 'bg-green-500'
           : isPresent
