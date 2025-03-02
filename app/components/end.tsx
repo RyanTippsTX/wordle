@@ -3,17 +3,13 @@ import { WordleIcon } from './wordle-icon';
 import { twMerge } from 'tailwind-merge';
 import { X } from 'lucide-react';
 import { useGameContext } from '~/context/GameContext';
-
-const shareMessage = `Tippsle 1,234 3/6
-Cameron's word
-
-🟨⬛⬛⬛🟨
-🟩🟩🟩⬛⬛
-🟩🟩🟩🟩🟩`;
+import toast from 'react-hot-toast';
+import { useShareMessage } from '~/utils/useShareMessage';
 
 export function End() {
-  const { setShowEnd } = useGameContext();
+  const { setShowEnd, guesses } = useGameContext();
   const [isSpinning, setIsSpinning] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
 
   const handleSpin = useCallback(() => {
     setIsSpinning(true);
@@ -22,11 +18,27 @@ export function End() {
     }, 400);
   }, []);
 
+  const shareMessage = useShareMessage();
+
   const handleShare = useCallback(() => {
-    if (isSpinning) return;
+    if (isSpinning || isSharing) return;
     handleSpin();
-    navigator.clipboard.writeText(shareMessage);
-  }, [isSpinning, handleSpin]);
+    navigator.clipboard
+      .writeText(shareMessage)
+      .then(() => {
+        // Use localToast instead of the global toast
+        toast.success('Results copied to clipboard!');
+      })
+      .catch(() => {
+        // Use localToast instead of the global toast
+        toast.error('Failed to copy link');
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsSharing(false);
+        }, 300);
+      });
+  }, [isSpinning, isSharing, handleSpin, shareMessage]);
 
   const handleClose = useCallback(() => {
     setShowEnd(false);
