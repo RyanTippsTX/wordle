@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import { isValidWord } from '~/utils/wordValidation';
+import toast from 'react-hot-toast';
 
 interface GameState {
   wordle: string;
@@ -71,6 +72,15 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
             setCurrentRow(currentRow + 1);
           } else {
             console.log(`Invalid word: ${currentGuess}`);
+            toast.error('Not in word list', {
+              duration: 2000,
+              position: 'top-center',
+              style: {
+                background: '#333',
+                color: '#fff',
+                fontWeight: 'bold',
+              },
+            });
           }
         }
       }
