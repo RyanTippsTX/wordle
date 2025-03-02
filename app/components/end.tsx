@@ -23,7 +23,7 @@ export function End() {
   };
 
   return (
-    <div className="absolute inset-0 text-gray-100 flex flex-col items-center justify-center bg-neutral-900">
+    <div className="absolute inset-0 text-gray-100 flex flex-col items-center justify-center bg-neutral-900 z-40">
       <div
         className="absolute top-3 right-3 p-3 cursor-pointer"
         onClick={() => {

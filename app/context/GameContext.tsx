@@ -51,9 +51,19 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (gameOver) {
+      if (didGuessSolution) {
+        toast.success('Great job!');
+      } else {
+        toast.error(solution, { duration: Infinity, icon: '💀' });
+      }
+    }
+  }, [gameOver, didGuessSolution]);
+
+  useEffect(() => {
+    if (gameOver) {
       setTimeout(() => {
         setShowEnd(true);
-      }, 1250);
+      }, 2000);
     }
   }, [gameOver]);
 

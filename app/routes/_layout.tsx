@@ -19,6 +19,9 @@ function LayoutComponent() {
             fontWeight: 'bold',
           },
         }}
+        containerStyle={{
+          zIndex: 40,
+        }}
       />
       <Outlet />
     </GameProvider>
