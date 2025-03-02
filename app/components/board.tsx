@@ -53,12 +53,14 @@ const Square = ({
     <div
       //
       className={twMerge(
-        'flex aspect-square w-14 sm:w-16 items-center justify-center text-3xl font-bold',
+        'flex aspect-square w-14 sm:w-16 items-center justify-center text-3xl font-bold transition-colors duration-300 select-none',
         isCorrect
           ? 'bg-green-500'
           : isPresent
             ? 'bg-yellow-500'
-            : 'bg-neutral-700 border-2 border-neutral-700',
+            : submitted
+              ? 'bg-neutral-700 border-2 border-neutral-700'
+              : 'bg-transparent border-2 border-neutral-700',
       )}
     >
       {letter.toUpperCase()}
