@@ -22,7 +22,6 @@ function LayoutComponent() {
         }}
         containerStyle={{
           zIndex: 40,
-          top: '58px',
         }}
       />
       <Outlet />
