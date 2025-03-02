@@ -25,7 +25,8 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Tippsle - a Wordle clone',
+        title: 'Tippsle — A  5 Letter Word Game',
+        //              ^this is an Em dash
       },
       {
         // disable zoom on mobile when clicking on text
