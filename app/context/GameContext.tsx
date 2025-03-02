@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+  useEffect,
+} from 'react';
 import { isValidWord } from '~/utils/wordValidation';
 import toast from 'react-hot-toast';
 
@@ -32,12 +39,20 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [currentRow, setCurrentRow] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
   const currentLetter = guesses[currentRow]?.length;
-  const [showEnd, setShowEnd] = useState(true);
+  const [showEnd, setShowEnd] = useState(false);
   const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
   const guessedLetters = new Set(pastGuesses.flat());
 
   const didGuessWordle = pastGuesses.slice(-1)[0]?.join('') === wordle;
   const gameOver = currentRow === 6 || didGuessWordle;
+
+  useEffect(() => {
+    if (gameOver) {
+      setTimeout(() => {
+        setShowEnd(true);
+      }, 1250);
+    }
+  }, [gameOver]);
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
