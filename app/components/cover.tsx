@@ -31,9 +31,30 @@ export function Cover() {
       </div>
 
       <div className="text-4xl font-bold mb-3 font-patua tracking-tight text-center">Tippsle</div>
-      <div className="text-2xl font-light text-center mb-8 mx-4">
-        {/* Get 6 chances to guess a 5-letter word. */}
-        First winner picks tomorrow's word.
+      <div className="text-2xl font-light text-center mb-8 mx-4 max-w-xl">
+        Get 6 chances to guess a 5-letter word.
+        <br />
+        First{' '}
+        <span
+          className="relative group"
+          onMouseMove={(e) => {
+            const tooltip = e.currentTarget.querySelector<HTMLElement>('.tooltip');
+            if (tooltip) {
+              const x = e.clientX;
+              const y = e.clientY;
+              tooltip.style.left = `${x + 10}px`;
+              tooltip.style.top = `${y - 10}px`;
+            }
+          }}
+        >
+          <span className="hover:underline">
+            winner<span className="align-super text-xs">*</span>
+          </span>
+          <span className="tooltip fixed z-50 p-2 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none w-48">
+            Winner means correct guess in 3 guesses or less
+          </span>
+        </span>{' '}
+        picks tomorrow's word.
       </div>
 
       <div className="flex flex-col gap-2">
