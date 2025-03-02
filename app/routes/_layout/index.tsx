@@ -31,7 +31,7 @@ function Home() {
     setGuesses,
     setCurrentRow,
     handleKeyPress,
-    setShowRules: setGameShowRules,
+    setShowRules,
   } = useGameContext();
 
   useEffect(() => {
