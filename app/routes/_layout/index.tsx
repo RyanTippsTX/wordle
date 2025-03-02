@@ -86,5 +86,5 @@ const Nav = () => {
 };
 
 const Brand = () => (
-  <div className="font-bold text-xl m-0.5 tracking-tight select-none font-patua">Wordle War</div>
+  <div className="font-bold text-xl m-0.5 tracking-tight select-none font-patua">Tippsle</div>
 );

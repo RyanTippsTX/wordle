@@ -10,7 +10,7 @@ import { isValidWord } from '~/utils/wordValidation';
 import toast from 'react-hot-toast';
 
 interface GameState {
-  wordle: string;
+  solution: string;
   guessedLetters: Set<string>;
   started: boolean;
   setStarted: (started: boolean) => void;
@@ -34,7 +34,7 @@ const GameContext = createContext<GameState | undefined>(undefined);
 const letters = 'abcdefghijklmnopqrstuvwxyz';
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
-  const wordle = 'hello';
+  const solution = 'hello';
   const [started, setStarted] = useState(false);
   const [showRules, setShowRules] = useState(true);
   const defaultGuesses = [[], [], [], [], [], []];
@@ -46,8 +46,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
   const guessedLetters = new Set(pastGuesses.flat());
 
-  const didGuessWordle = pastGuesses.slice(-1)[0]?.join('') === wordle;
-  const gameOver = currentRow === 6 || didGuessWordle;
+  const didGuessSolution = pastGuesses.slice(-1)[0]?.join('') === solution;
+  const gameOver = currentRow === 6 || didGuessSolution;
 
   useEffect(() => {
     if (gameOver) {
@@ -131,7 +131,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   return (
     <GameContext.Provider
       value={{
-        wordle,
+        solution,
         guessedLetters,
         started,
         setStarted,

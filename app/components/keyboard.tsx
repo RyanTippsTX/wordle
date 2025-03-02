@@ -67,7 +67,7 @@ const KeyboardKey = ({
   last?: boolean;
 }) => {
   const {
-    wordle,
+    solution,
     guessedLetters,
     guesses,
     pastGuesses,
@@ -80,9 +80,9 @@ const KeyboardKey = ({
   } = useGameContext();
 
   const isGuessed = guessedLetters.has(thisKey);
-  const isInWordle = wordle.includes(thisKey);
+  const isInSolution = solution.includes(thisKey);
   const isCorrect = pastGuesses.some((guess) =>
-    guess.some((letter, index) => letter === thisKey && wordle[index] === letter),
+    guess.some((letter, index) => letter === thisKey && solution[index] === letter),
   );
 
   return (
@@ -95,7 +95,7 @@ const KeyboardKey = ({
         'h-full flex items-center justify-center bg-neutral-400 text-white font-bold rounded cursor-pointer select-none',
         !special &&
           isGuessed &&
-          (isCorrect ? 'bg-green-500' : isInWordle ? 'bg-yellow-500' : 'bg-neutral-700'),
+          (isCorrect ? 'bg-green-500' : isInSolution ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
       onClick={() => handleKeyPress({ key: thisKey } as KeyboardEvent)} // dirty, fix later
     >

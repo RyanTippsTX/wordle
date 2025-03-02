@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import { X } from 'lucide-react';
 import { useGameContext } from '~/context/GameContext';
 
-const shareMessage = `Wordle War 1,234 3/6
+const shareMessage = `Tippsle 1,234 3/6
 Cameron's word
 
 🟨⬛⬛⬛🟨

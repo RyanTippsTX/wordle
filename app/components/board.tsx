@@ -18,7 +18,7 @@ export function Board() {
 }
 
 const Row = ({ rowIndex }: { rowIndex: number }) => {
-  const { guesses, wordle, currentRow, isShaking } = useGameContext();
+  const { guesses, solution, currentRow, isShaking } = useGameContext();
   const guess = guesses[rowIndex];
   const untypedLetters = 5 - guess.length;
   const letters = [...guess, ...Array(untypedLetters).fill(' ')];
@@ -43,11 +43,11 @@ const Square = ({
   letterIndex: number;
   rowIndex: number;
 }) => {
-  const { guesses, wordle, currentRow } = useGameContext();
-  const correctLetter = wordle[letterIndex];
+  const { guesses, solution, currentRow } = useGameContext();
+  const correctLetter = solution[letterIndex];
   const submitted = currentRow > rowIndex;
   const isCorrect = submitted && letter === correctLetter;
-  const isPresent = submitted && wordle.includes(letter);
+  const isPresent = submitted && solution.includes(letter);
 
   return (
     <div

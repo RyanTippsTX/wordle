@@ -1,4 +1,4 @@
-const title = 'Wordle War';
+const title = 'Tippsle';
 const description = "First winner picks tomorrow's word.";
 
 export function Layout({ children }: { children: React.ReactNode | React.ReactNode[] }) {
