@@ -59,7 +59,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       if (didGuessSolution) {
         toast.success('Great job!', { duration: Infinity, icon: '🎉' });
       } else {
-        toast.error(solution, { duration: Infinity, icon: '💀' });
+        toast.error(solution.toUpperCase(), { duration: Infinity, icon: '💀' });
       }
     }
   }, [gameOver, didGuessSolution, solution]);
