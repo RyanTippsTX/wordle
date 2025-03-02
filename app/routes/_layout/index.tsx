@@ -6,6 +6,7 @@ import { End } from '~/components/end';
 import { Keyboard } from '~/components/keyboard';
 import { Rules } from '~/components/rules';
 import { GameProvider, useGameContext } from '~/context/GameContext';
+import { HelpCircle } from 'lucide-react';
 // import { createUrl } from '~/utils/urlStore';
 
 // defines the page content at the given route
@@ -30,6 +31,7 @@ function Home() {
     setGuesses,
     setCurrentRow,
     handleKeyPress,
+    setShowRules: setGameShowRules,
   } = useGameContext();
 
   useEffect(() => {
@@ -64,13 +66,24 @@ function Home() {
   );
 }
 
-const Nav = () => (
-  <nav className="w-full text-base bg-neutral-900 border-b border-neutral-700">
-    <div className="max-w-3xl mx-auto px-4 py-2 flex gap-2 items-center justify-center">
-      <Brand />
-    </div>
-  </nav>
-);
+const Nav = () => {
+  const { setShowRules } = useGameContext();
+
+  return (
+    <nav className="w-full text-base bg-neutral-900 border-b border-neutral-700">
+      <div className="max-w-3xl mx-auto px-4 py-2 flex items-center justify-between">
+        <Brand />
+        <button
+          onClick={() => setShowRules(true)}
+          className="p-2 text-gray-300 hover:text-white hover:bg-neutral-800 rounded-full transition-colors"
+          aria-label="Help"
+        >
+          <HelpCircle size={20} />
+        </button>
+      </div>
+    </nav>
+  );
+};
 
 const Brand = () => (
   <div className="font-bold text-xl m-0.5 tracking-tight select-none font-patua">Wordle War</div>

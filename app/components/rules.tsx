@@ -27,7 +27,7 @@ export function Rules() {
       {/* Backdrop with fade effect */}
       <div
         className={twMerge(
-          'absolute inset-0 bg-neutral-900/80 backdrop-blur-sm transition-opacity duration-300',
+          'absolute inset-0 bg-neutral-950/80 backdrop-blur-sm transition-opacity duration-300',
           isVisible ? 'opacity-100' : 'opacity-0',
         )}
         onClick={handleClose}
@@ -36,9 +36,9 @@ export function Rules() {
       {/* Modal content with slide-up and fade effect */}
       <div
         className={twMerge(
-          'relative w-full max-w-md mx-auto transition-all duration-300 transform',
-          'md:rounded-xl overflow-y-auto max-h-[90vh]',
-          'bg-neutral-900 text-gray-100 p-6 md:p-8',
+          'relative w-full max-h-full max-w-xl mx-auto transition-all duration-300 transform',
+          'sm:rounded-xl overflow-y-auto sm:max-h-[90vh]',
+          'bg-neutral-900 text-gray-100 p-6 md:p-8 border border-neutral-800',
           'flex flex-col',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4',
         )}
@@ -50,9 +50,9 @@ export function Rules() {
           <X />
         </div>
 
-        <div className="flex justify-center mb-6">
+        {/* <div className="flex justify-center mb-6">
           <WordleIcon />
-        </div>
+        </div> */}
 
         <div className="text-4xl font-extrabold mb-3 text-center">How to play</div>
         <div className="text-2xl font-light text-center mb-8">Guess the word in 6 tries</div>
@@ -141,13 +141,6 @@ export function Rules() {
             </p>
           </div>
         </div>
-
-        <button
-          className="mt-8 py-3 px-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full transition-colors"
-          onClick={handleClose}
-        >
-          Play
-        </button>
       </div>
     </div>
   );
