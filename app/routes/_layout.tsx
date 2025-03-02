@@ -14,6 +14,7 @@ function LayoutComponent() {
         toastOptions={{
           duration: 1000,
           style: {
+            userSelect: 'none',
             background: '#333',
             color: '#fff',
             fontWeight: 'bold',

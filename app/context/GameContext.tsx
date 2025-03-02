@@ -52,7 +52,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (gameOver) {
       if (didGuessSolution) {
-        toast.success('Great job!');
+        toast.success('Great job!', { duration: Infinity, icon: '🎉' });
       } else {
         toast.error(solution, { duration: Infinity, icon: '💀' });
       }
