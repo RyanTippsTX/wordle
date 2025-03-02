@@ -1,8 +1,7 @@
 import { useGameContext } from '~/context/GameContext';
-import { WordleIcon } from './wordle-icon';
 import { X } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export function Rules() {
   const { setShowRules } = useGameContext();
@@ -14,13 +13,29 @@ export function Rules() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false);
     // Wait for animation to complete before hiding
     setTimeout(() => {
       setShowRules(false);
     }, 300);
-  };
+  }, [setShowRules]);
+
+  useEffect(() => {
+    // Add keyboard event listener for Enter and Escape keys
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">

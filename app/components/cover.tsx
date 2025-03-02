@@ -1,7 +1,7 @@
 import { useGameContext } from '~/context/GameContext';
 import { WordleIcon } from './wordle-icon';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Route } from '~/routes/_layout/index';
 import { formatDate } from '~/utils/dates';
 
@@ -26,6 +26,23 @@ export function Cover() {
         }, 300);
       });
   };
+
+  const playGame = useCallback(() => {
+    setStarted(true);
+  }, [setStarted]);
+
+  // Enter key will start game too
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        playGame();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [playGame]);
 
   return (
     <div className="absolute inset-0 text-black flex flex-col items-center justify-center bg-gray-100">
@@ -62,12 +79,12 @@ export function Cover() {
       <div className="flex flex-col gap-2">
         <button
           className="w-40 h-12 py-2 px-4 bg-black text-white rounded-full border border-black"
-          onClick={() => setStarted(true)}
+          onClick={playGame}
         >
           Play
         </button>
         <button
-          onClick={() => setStarted(true)} // hack - rules get shown anyways, just looks better with 3 buttons 🤫
+          onClick={playGame} // hack - rules get shown anyways, just looks better with 3 buttons 🤫
           className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black"
         >
           Rules
