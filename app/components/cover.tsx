@@ -34,7 +34,6 @@ export function Cover() {
       <div className="text-2xl font-light text-center mb-8 mx-4 max-w-xl">
         Get 6 chances to guess a 5-letter word.
         <br />
-        First{' '}
         <span
           className="relative group"
           onMouseMove={(e) => {
@@ -42,16 +41,16 @@ export function Cover() {
             if (tooltip) {
               const x = e.clientX;
               const y = e.clientY;
-              tooltip.style.left = `${x + 10}px`;
-              tooltip.style.top = `${y - 10}px`;
+              tooltip.style.left = `${x}px`;
+              tooltip.style.top = `${y}px`;
             }
           }}
         >
-          <span className="hover:underline">
-            winner<span className="align-super text-xs">*</span>
+          <span className="hover:underline cursor-help">
+            First winner<span className="align-super text-xs">*</span>
           </span>
-          <span className="tooltip fixed z-50 p-2 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none w-48">
-            Winner means correct guess in 3 guesses or less
+          <span className="tooltip fixed z-50 p-2 bg-neutral-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none min-w-min translate-y-3 translate-x-2">
+            in 3 guesses or less
           </span>
         </span>{' '}
         picks tomorrow's word.
