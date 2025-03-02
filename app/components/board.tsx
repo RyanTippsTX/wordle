@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
 
 export function Board() {
-  const { guesses, currentRow, currentLetter } = useGameContext();
+  const { guesses, currentRow, currentLetter, chosenBy } = useGameContext();
   return (
     <div
       className="flex h-full w-full flex-col 
@@ -10,6 +10,11 @@ export function Board() {
         space-y-1.5
         "
     >
+      {chosenBy.trim().length > 0 && (
+        <div className="text-center mx-auto text-gray-300 text-lg pb-2 italic font-medium">
+          Today's word chosen by {chosenBy}
+        </div>
+      )}
       {guesses.map((guess, index) => (
         <Row key={index} rowIndex={index} />
       ))}

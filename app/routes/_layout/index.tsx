@@ -32,6 +32,7 @@ function Home() {
     setCurrentRow,
     handleKeyPress,
     setShowRules,
+    chosenBy,
   } = useGameContext();
 
   useEffect(() => {

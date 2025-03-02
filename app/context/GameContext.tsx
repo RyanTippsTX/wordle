@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 
 interface GameState {
   solution: string;
+  chosenBy: string;
   guessedLetters: Set<string>;
   started: boolean;
   setStarted: (started: boolean) => void;
@@ -35,6 +36,8 @@ const letters = 'abcdefghijklmnopqrstuvwxyz';
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const solution = 'hello';
+  const chosenBy = 'Cameron';
+
   const [started, setStarted] = useState(false);
   const [showRules, setShowRules] = useState(true);
   const defaultGuesses = [[], [], [], [], [], []];
@@ -142,6 +145,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     <GameContext.Provider
       value={{
         solution,
+        chosenBy,
         guessedLetters,
         started,
         setStarted,
