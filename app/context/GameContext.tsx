@@ -32,10 +32,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [currentRow, setCurrentRow] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
   const currentLetter = guesses[currentRow]?.length;
-  const gameOver = currentRow === 6;
   const [showEnd, setShowEnd] = useState(true);
   const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
   const guessedLetters = new Set(pastGuesses.flat());
+
+  const didGuessWordle = pastGuesses.slice(-1)[0]?.join('') === wordle;
+  const gameOver = currentRow === 6 || didGuessWordle;
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
