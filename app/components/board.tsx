@@ -18,13 +18,15 @@ export function Board() {
 }
 
 const Row = ({ rowIndex }: { rowIndex: number }) => {
-  const { guesses, wordle } = useGameContext();
+  const { guesses, wordle, currentRow, isShaking } = useGameContext();
   const guess = guesses[rowIndex];
   const untypedLetters = 5 - guess.length;
   const letters = [...guess, ...Array(untypedLetters).fill(' ')];
+  const isCurrentRow = rowIndex === currentRow;
+  const shouldShake = isShaking && isCurrentRow;
 
   return (
-    <div className="flex gap-x-1.5">
+    <div className={twMerge('flex gap-x-1.5', shouldShake && 'animate-shake')}>
       {letters.map((letter, letterIndex) => (
         <Square key={letterIndex} letter={letter} letterIndex={letterIndex} rowIndex={rowIndex} />
       ))}

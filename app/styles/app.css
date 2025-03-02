@@ -9,3 +9,36 @@
     @apply bg-neutral-900 text-neutral-50 w-full h-svh overflow-clip selection:bg-neutral-400;
   }
 }
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-0.3rem);
+  }
+  30% {
+    transform: translateX(0.3rem);
+  }
+  45% {
+    transform: translateX(-0.3rem);
+  }
+  60% {
+    transform: translateX(0.3rem);
+  }
+  75% {
+    transform: translateX(-0.3rem);
+  }
+  90% {
+    transform: translateX(0.3rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .animate-shake {
+    animation: shake 300ms ease-in-out;
+  }
+}

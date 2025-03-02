@@ -17,6 +17,7 @@ interface GameState {
   setGuesses: React.Dispatch<React.SetStateAction<string[][]>>;
   setCurrentRow: React.Dispatch<React.SetStateAction<number>>;
   handleKeyPress: (e: KeyboardEvent) => void;
+  isShaking: boolean;
 }
 
 const GameContext = createContext<GameState | undefined>(undefined);
@@ -29,6 +30,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const defaultGuesses = [[], [], [], [], [], []];
   const [guesses, setGuesses] = useState<string[][]>(defaultGuesses);
   const [currentRow, setCurrentRow] = useState(0);
+  const [isShaking, setIsShaking] = useState(false);
   const currentLetter = guesses[currentRow]?.length;
   const gameOver = currentRow === 6;
   const [showEnd, setShowEnd] = useState(true);
@@ -81,6 +83,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
                 fontWeight: 'bold',
               },
             });
+
+            // Trigger shake animation
+            setIsShaking(true);
+            setTimeout(() => {
+              setIsShaking(false);
+            }, 300);
           }
         }
       }
@@ -114,6 +122,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setGuesses,
         setCurrentRow,
         handleKeyPress,
+        isShaking,
       }}
     >
       {children}
