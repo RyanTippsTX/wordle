@@ -14,6 +14,8 @@ interface GameState {
   guessedLetters: Set<string>;
   started: boolean;
   setStarted: (started: boolean) => void;
+  showRules: boolean;
+  setShowRules: (showRules: boolean) => void;
   pastGuesses: string[][];
   guesses: string[][];
   currentRow: number;
@@ -34,6 +36,7 @@ const letters = 'abcdefghijklmnopqrstuvwxyz';
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const wordle = 'hello';
   const [started, setStarted] = useState(false);
+  const [showRules, setShowRules] = useState(true);
   const defaultGuesses = [[], [], [], [], [], []];
   const [guesses, setGuesses] = useState<string[][]>(defaultGuesses);
   const [currentRow, setCurrentRow] = useState(0);
@@ -58,6 +61,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     (e: KeyboardEvent) => {
       // ignore until game starts
       if (!started) {
+        return;
+      }
+
+      // ignore while rules are shown
+      if (showRules) {
         return;
       }
 
@@ -127,6 +135,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         guessedLetters,
         started,
         setStarted,
+        showRules,
+        setShowRules,
         showEnd,
         setShowEnd,
         pastGuesses,

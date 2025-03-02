@@ -2,7 +2,7 @@ import { useGameContext } from '~/context/GameContext';
 import { WordleIcon } from './wordle-icon';
 
 export function Cover() {
-  const { setStarted } = useGameContext();
+  const { setStarted, setShowRules } = useGameContext();
   return (
     <div className="absolute inset-0 text-black flex flex-col items-center justify-center bg-gray-100">
       <div className="mb-3 w-16 h-16 flex items-center justify-center">
@@ -24,7 +24,10 @@ export function Cover() {
         >
           Play
         </button>
-        <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
+        <button
+          onClick={() => setStarted(true)} // hack - rules get shown anyways, just looks better with 3 buttons 🤫
+          className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black"
+        >
           Rules
         </button>
         <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">

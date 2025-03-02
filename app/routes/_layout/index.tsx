@@ -4,6 +4,7 @@ import { Board } from '~/components/board';
 import { Cover } from '~/components/cover';
 import { End } from '~/components/end';
 import { Keyboard } from '~/components/keyboard';
+import { Rules } from '~/components/rules';
 import { GameProvider, useGameContext } from '~/context/GameContext';
 // import { createUrl } from '~/utils/urlStore';
 
@@ -25,6 +26,7 @@ function Home() {
     currentLetter,
     gameOver,
     showEnd,
+    showRules,
     setGuesses,
     setCurrentRow,
     handleKeyPress,
@@ -47,6 +49,7 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center justify-between h-full w-full">
+      {showRules && <Rules />}
       {/* <div className="absolute top-12 left-0 text-xs">
         <pre>{JSON.stringify(guesses, null, 2)}</pre>
       </div> */}
