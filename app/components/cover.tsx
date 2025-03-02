@@ -1,8 +1,29 @@
 import { useGameContext } from '~/context/GameContext';
 import { WordleIcon } from './wordle-icon';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 export function Cover() {
   const { setStarted, setShowRules } = useGameContext();
+  const [isSharing, setIsSharing] = useState(false);
+
+  const handleShare = () => {
+    setIsSharing(true);
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        toast.success('Link copied to clipboard!');
+      })
+      .catch(() => {
+        toast.error('Failed to copy link');
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsSharing(false);
+        }, 300);
+      });
+  };
+
   return (
     <div className="absolute inset-0 text-black flex flex-col items-center justify-center bg-gray-100">
       <div className="mb-3 w-16 h-16 flex items-center justify-center">
@@ -28,7 +49,11 @@ export function Cover() {
         >
           Rules
         </button>
-        <button className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black">
+        <button
+          className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black"
+          onClick={handleShare}
+          disabled={isSharing}
+        >
           Share
         </button>
       </div>
