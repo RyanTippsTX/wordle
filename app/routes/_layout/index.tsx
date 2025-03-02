@@ -50,7 +50,7 @@ function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between h-full w-full">
+    <div className="flex flex-col items-center justify-between h-full w-full max-h-[48rem]">
       {showRules && <Rules />}
       {/* <div className="absolute top-12 left-0 text-xs">
         <pre>{JSON.stringify(guesses, null, 2)}</pre>
