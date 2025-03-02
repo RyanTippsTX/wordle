@@ -54,13 +54,14 @@ export function Rules() {
           <WordleIcon />
         </div> */}
 
-        <div className="text-4xl font-extrabold mb-3 text-center">How to play</div>
-        <div className="text-2xl font-light text-center mb-8">Guess the word in 6 tries</div>
+        <div className="text-3xl font-extrabold mb-0 tracking-tight mt-4 font-patua">
+          How to play
+        </div>
+        <div className="text-xl font-light mb-3 tracking-tight">Guess the word in 6 tries</div>
 
         <div className="space-y-6">
           <div>
-            <p className="mb-2 text-lg font-medium">Rules:</p>
-            <ul className="list-disc pl-5 space-y-2">
+            <ul className="list-disc pl-5 space-y-2 tracking-tight font-light">
               <li>Each guess must be a valid 5-letter word</li>
               <li>The color of the tiles will change to show how close your guess was</li>
               <li>You have 6 attempts to guess the word correctly</li>
@@ -68,22 +69,22 @@ export function Rules() {
           </div>
 
           <div>
-            <p className="mb-2 text-lg font-medium">Examples:</p>
+            <p className="mb-2 font-medium">Examples:</p>
             <div className="mb-4">
               <div className="flex gap-1 mb-1">
-                <div className="w-10 h-10 flex items-center justify-center bg-green-600 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-green-600 font-bold text-white">
                   W
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   E
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   A
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   R
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   Y
                 </div>
               </div>
@@ -92,19 +93,19 @@ export function Rules() {
 
             <div className="mb-4">
               <div className="flex gap-1 mb-1">
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   P
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-yellow-500 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-yellow-500 font-bold text-white">
                   I
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   L
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   L
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   S
                 </div>
               </div>
@@ -113,19 +114,19 @@ export function Rules() {
 
             <div className="mb-4">
               <div className="flex gap-1 mb-1">
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   V
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   A
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   G
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-800 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-neutral-700 font-bold text-white">
                   U
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-neutral-700 font-bold text-white border border-neutral-700">
+                <div className="w-10 h-10 text-lg flex items-center justify-center bg-transparent border-2 border-neutral-700 font-bold text-white">
                   E
                 </div>
               </div>
@@ -133,11 +134,11 @@ export function Rules() {
             </div>
           </div>
 
-          <div className="p-4 bg-neutral-800 rounded-lg border border-neutral-700">
+          <div className="p-4 bg-neutral-800 rounded-lg">
             <p className="font-medium text-yellow-400">Special Rule:</p>
             <p>
-              If you are the first to guess the word in a given day, you get to pick tomorrow's
-              word!
+              The first player to correctly guess the word in 3 tried or less gets to pick
+              tomorrow's word!
             </p>
           </div>
         </div>

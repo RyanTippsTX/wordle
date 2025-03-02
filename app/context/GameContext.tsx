@@ -125,7 +125,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     },
-    [currentLetter, currentRow, setGuesses, setCurrentRow, started, gameOver, guesses],
+    [currentLetter, currentRow, setGuesses, setCurrentRow, started, gameOver, guesses, showRules],
   );
 
   return (
