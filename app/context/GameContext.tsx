@@ -74,15 +74,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
             setCurrentRow(currentRow + 1);
           } else {
             console.log(`Invalid word: ${currentGuess}`);
-            toast.error('Not in word list', {
-              duration: 2000,
-              position: 'top-center',
-              style: {
-                background: '#333',
-                color: '#fff',
-                fontWeight: 'bold',
-              },
-            });
+            toast.error('Not in word list');
 
             // Trigger shake animation
             setIsShaking(true);

@@ -9,7 +9,17 @@ export const Route = createFileRoute('/_layout')({
 function LayoutComponent() {
   return (
     <GameProvider>
-      <Toaster />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 1000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            fontWeight: 'bold',
+          },
+        }}
+      />
       <Outlet />
     </GameProvider>
   );
