@@ -8,10 +8,11 @@ import React, {
 } from 'react';
 import { isValidWord } from '~/utils/wordValidation';
 import toast from 'react-hot-toast';
+import { Route } from '~/routes/_layout/index';
 
 interface GameState {
   solution: string;
-  chosenBy: string;
+  chosenBy: string | null;
   guessedLetters: Set<string>;
   started: boolean;
   setStarted: (started: boolean) => void;
@@ -35,8 +36,9 @@ const GameContext = createContext<GameState | undefined>(undefined);
 const letters = 'abcdefghijklmnopqrstuvwxyz';
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
-  const solution = 'hello';
-  const chosenBy = 'Cameron';
+  const todaysGame = Route.useLoaderData();
+  const solution = todaysGame.solution;
+  const chosenBy = todaysGame.chosenBy;
 
   const [started, setStarted] = useState(false);
   const [showRules, setShowRules] = useState(true);
@@ -60,7 +62,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         toast.error(solution, { duration: Infinity, icon: '💀' });
       }
     }
-  }, [gameOver, didGuessSolution]);
+  }, [gameOver, didGuessSolution, solution]);
 
   useEffect(() => {
     if (gameOver) {

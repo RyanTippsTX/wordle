@@ -2,9 +2,12 @@ import { useGameContext } from '~/context/GameContext';
 import { WordleIcon } from './wordle-icon';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { Route } from '~/routes/_layout/index';
+import { formatDate } from '~/utils/dates';
 
 export function Cover() {
-  const { setStarted, setShowRules } = useGameContext();
+  const todaysGame = Route.useLoaderData();
+  const { setStarted } = useGameContext();
   const [isSharing, setIsSharing] = useState(false);
 
   const handleShare = () => {
@@ -79,14 +82,8 @@ export function Cover() {
       </div>
 
       <div className="mt-8 text-center">
-        <div className="font-semibold text-sm">
-          {new Date().toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-          })}
-        </div>
-        <div className="text-sm">No. 1</div>
+        <div className="font-semibold text-sm">{formatDate(todaysGame.date)}</div>
+        <div className="text-sm">No. {todaysGame.id}</div>
         <div className="text-sm">Edited by Ryan Tipps</div>
       </div>
     </div>

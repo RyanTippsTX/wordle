@@ -7,17 +7,18 @@ import { Keyboard } from '~/components/keyboard';
 import { Rules } from '~/components/rules';
 import { GameProvider, useGameContext } from '~/context/GameContext';
 import { HelpCircle } from 'lucide-react';
-// import { createUrl } from '~/utils/urlStore';
+import { getTodaysGame } from '~/utils/game';
 
 // defines the page content at the given route
 export const Route = createFileRoute('/_layout/')({
   component: Home,
-  // loader: async () => await getCount(), // equivalent of getSSProps
+  loader: async () => await getTodaysGame(), // equivalent of getSSProps
 });
 
 function Home() {
   // const router = useRouter();
-  // const state = Route.useLoaderData();
+  const todaysGame = Route.useLoaderData();
+  console.log('🔥 ', todaysGame);
 
   const {
     started,
