@@ -62,7 +62,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
             newGuesses[currentRow][currentLetter] = e.key.toLowerCase();
             return newGuesses;
           });
-        }
+        } else return; // should not happen
       }
 
       // enter
@@ -73,7 +73,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
           if (isValidWord(currentGuess)) {
             setCurrentRow(currentRow + 1);
           } else {
-            console.log(`Invalid word: ${currentGuess}`);
             toast.error('Not in word list');
 
             // Trigger shake animation
@@ -82,7 +81,14 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
               setIsShaking(false);
             }, 300);
           }
-        }
+        } else if (currentLetter < 5) {
+          toast.error('Not enough letters');
+          // Trigger shake animation
+          setIsShaking(true);
+          setTimeout(() => {
+            setIsShaking(false);
+          }, 300);
+        } else return; // should not happen
       }
 
       // delete
