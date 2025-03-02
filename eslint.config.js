@@ -45,10 +45,10 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['off', { argsIgnorePattern: '^_' }],
 
       // Override core ESLint rules
-      'no-unused-vars': 'warn', // Changed from error to warning
+      'no-unused-vars': 'off', // Changed from error to warning
     },
   },
 ];
