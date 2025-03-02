@@ -135,7 +135,7 @@ export function Rules() {
           </div>
 
           <div className="p-4 bg-neutral-800 rounded-lg">
-            <p className="font-medium text-yellow-400">Special Rule:</p>
+            <p className="font-medium text-yellow-400">✨ Special Rule</p>
             <p>
               The first player to correctly guess the word in 3 tried or less gets to pick
               tomorrow's word!
