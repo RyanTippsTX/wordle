@@ -11,16 +11,16 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
   .handler(async ({ data }) => {
     // TODO: get from database
-    const id = 9;
+    const id = 10;
     // const date = new Intl.DateTimeFormat('en-CA', {
     //   timeZone: 'America/Chicago', // Central Time (CST/CDT)
     //   year: 'numeric',
     //   month: '2-digit',
     //   day: '2-digit',
     // }).format(new Date());
-    const date = '2025-04-16';
-    const solution = 'treat';
-    const chosenBy = 'Finn T.';
+    const date = '2025-03-04';
+    const solution = 'natal';
+    const chosenBy = 'Ashley W.';
 
     // fake await 100ms
     await new Promise((resolve) => setTimeout(resolve, 100));
