@@ -75,12 +75,14 @@ export function Cover() {
 
   return (
     <div className="absolute inset-0 text-black flex flex-col items-center justify-center bg-gray-100">
-      <div className="mb-3 w-16 h-16 flex items-center justify-center">
+      <div className="mb-4 h-14 sm:h-16 aspect-square flex items-center justify-center">
         <WordleIcon />
       </div>
 
-      <div className="text-4xl font-bold mb-3 font-patua tracking-tight text-center">Tippsle</div>
-      <div className="text-2xl font-light text-center mb-8 mx-4 max-w-xl">
+      <div className="text-4xl sm:text-[2.75rem] font-bold mb-3 font-patua tracking-tight text-center">
+        Tippsle
+      </div>
+      <div className="text-xl sm:text-2xl font-light text-center mb-8 mx-4 max-w-xl">
         Get 6 chances to guess a 5-letter word.
         <br />
         <span

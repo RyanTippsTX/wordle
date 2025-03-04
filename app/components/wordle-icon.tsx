@@ -1,6 +1,12 @@
 export function WordleIcon() {
   return (
-    <svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      // width="62"
+      // height="62"
+      viewBox="0 0 62 62"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path d="M41.761 21.1302H41.751V21.1402H41.761V21.1302Z" fill="#7FA768" />
       <path
         d="M41.751 22.6515V58.1213H54.6218C56.5534 58.1213 58.1247 56.57 58.1247 54.6584V40.3163V22.7316L41.751 22.6515Z"
