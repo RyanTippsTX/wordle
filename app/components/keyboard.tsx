@@ -1,6 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
 import { Delete } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function Keyboard() {
   return (
@@ -87,12 +88,12 @@ const KeyboardKey = ({
 
   return (
     <div
-      //
       className={twMerge(
         !last && 'mr-1.5',
         special ? 'flex-[1.5_1_0%]' : 'flex-1',
         special ? 'text-xs tracking-tighter' : 'text-lg',
         'h-full flex items-center justify-center bg-neutral-400 text-white font-bold rounded cursor-pointer select-none',
+        'active:brightness-75 transition-all duration-100',
         !special &&
           isGuessed &&
           (isCorrect ? 'bg-green-500' : isInSolution ? 'bg-yellow-500' : 'bg-neutral-700'),
