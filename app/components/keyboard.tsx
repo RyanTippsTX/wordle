@@ -93,7 +93,7 @@ const KeyboardKey = ({
         special ? 'flex-[1.5_1_0%]' : 'flex-1',
         special ? 'text-xs tracking-tighter' : 'text-lg',
         'h-full flex items-center justify-center bg-neutral-400 text-white font-bold rounded cursor-pointer select-none',
-        'active:brightness-75 transition-all duration-100',
+        'active:brightness-[0.6]',
         !special &&
           isGuessed &&
           (isCorrect ? 'bg-green-500' : isInSolution ? 'bg-yellow-500' : 'bg-neutral-700'),
