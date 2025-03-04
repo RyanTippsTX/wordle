@@ -11,7 +11,7 @@ export function Board() {
         "
     >
       {chosenBy && chosenBy.trim().length > 0 && (
-        <div className="text-center mx-auto text-gray-300 text-lg pb-2 italic font-medium">
+        <div className="text-center mx-auto text-gray-300 text-lg pb-2 italic font-medium select-none">
           Today's word chosen by {chosenBy}
         </div>
       )}
