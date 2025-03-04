@@ -23,21 +23,45 @@ export function End() {
   const handleShare = useCallback(() => {
     if (isSpinning || isSharing) return;
     handleSpin();
-    navigator.clipboard
-      .writeText(shareMessage)
-      .then(() => {
-        // Use localToast instead of the global toast
-        toast.success('Results copied to clipboard!');
-      })
-      .catch(() => {
-        // Use localToast instead of the global toast
-        toast.error('Failed to copy link');
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsSharing(false);
-        }, 300);
-      });
+    setIsSharing(true);
+
+    // Try to use Web Share API if available
+    if (navigator.share) {
+      navigator
+        .share({
+          title: shareMessage.info,
+          text: shareMessage.emojiGrid,
+        })
+        .then(() => {
+          toast.success('Shared successfully!');
+        })
+        .catch((error) => {
+          // If user cancels share, don't show error
+          if (error.name !== 'AbortError') {
+            toast.error('Failed to share');
+          }
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsSharing(false);
+          }, 300);
+        });
+    } else {
+      // Fallback to clipboard if Web Share API is not available
+      navigator.clipboard
+        .writeText(`${shareMessage.info}\n${shareMessage.emojiGrid}`)
+        .then(() => {
+          toast.success('Results copied to clipboard!');
+        })
+        .catch(() => {
+          toast.error('Failed to copy link');
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsSharing(false);
+          }, 300);
+        });
+    }
   }, [isSpinning, isSharing, handleSpin, shareMessage]);
 
   const handleClose = useCallback(() => {

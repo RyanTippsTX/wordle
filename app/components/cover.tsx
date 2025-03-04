@@ -12,19 +12,48 @@ export function Cover() {
 
   const handleShare = () => {
     setIsSharing(true);
-    navigator.clipboard
-      .writeText(window.location.href)
-      .then(() => {
-        toast.success('Link copied to clipboard!');
-      })
-      .catch(() => {
-        toast.error('Failed to copy link');
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsSharing(false);
-        }, 300);
-      });
+
+    // Try to use Web Share API if available
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `Tippsle #${todaysGame.id} - ${formatDate(todaysGame.date)}`,
+          url: window.location.href,
+          text: 'Check out this Wordle game!',
+        })
+        .then(() => {
+          toast.success('Shared successfully!');
+        })
+        .catch((error) => {
+          // If user cancels share, don't show error
+          if (error.name !== 'AbortError') {
+            toast.error('Failed to share');
+          }
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsSharing(false);
+          }, 300);
+        });
+    } else {
+      // Fallback to clipboard if Web Share API is not available
+      const shareMessage = `Tippsle #${todaysGame.id} - ${formatDate(todaysGame.date)}
+      ${window.location.href}
+      Check out this Wordle game!`;
+      navigator.clipboard
+        .writeText(shareMessage)
+        .then(() => {
+          toast.success('Link copied to clipboard!');
+        })
+        .catch(() => {
+          toast.error('Failed to copy link');
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsSharing(false);
+          }, 300);
+        });
+    }
   };
 
   const playGame = useCallback(() => {

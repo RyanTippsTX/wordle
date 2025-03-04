@@ -25,18 +25,15 @@ function getShareMessage({
   currentRow: number;
   guesses: string[][];
 }) {
-  if (!gameOver) return ''; // shouldn't ever happen
-
   const letterToEmoji = (letter: string, index: number) =>
     letter === solution[index] ? '🟩' : solution.includes(letter) ? '🟨' : '⬛';
   const lettersToEmojis = (guess: string[]) => guess.map(letterToEmoji).join('');
 
+  const info = `Tippsle #${id} ${currentRow}/6${chosenBy ? `\n${chosenBy}'s word` : ''}`;
   const emojiGrid = guesses.slice(0, currentRow).map(lettersToEmojis).join('\n');
 
-  const shareMessage = `Tippsle #${id} ${currentRow}/6${chosenBy ? `\n${chosenBy}'s word` : ''}
-
-${emojiGrid}
-`;
-
-  return shareMessage;
+  return {
+    info,
+    emojiGrid,
+  };
 }
