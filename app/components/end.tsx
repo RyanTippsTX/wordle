@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import { X } from 'lucide-react';
 import { useGameContext } from '~/context/GameContext';
 import toast from 'react-hot-toast';
-import { useShareMessage } from '~/utils/useShareMessage';
+import { isMobile, useShareMessage } from '~/utils/useShareMessage';
 
 export function End() {
   const { setShowEnd, guesses } = useGameContext();
@@ -26,12 +26,9 @@ export function End() {
     setIsSharing(true);
 
     // Try to use Web Share API if available
-    if (navigator.share) {
+    if (navigator.share && isMobile()) {
       navigator
-        .share({
-          title: shareMessage.info,
-          text: shareMessage.emojiGrid,
-        })
+        .share({ text: shareMessage })
         .then(() => {
           toast.success('Shared successfully!');
         })
@@ -49,7 +46,7 @@ export function End() {
     } else {
       // Fallback to clipboard if Web Share API is not available
       navigator.clipboard
-        .writeText(`${shareMessage.info}\n${shareMessage.emojiGrid}`)
+        .writeText(shareMessage)
         .then(() => {
           toast.success('Results copied to clipboard!');
         })

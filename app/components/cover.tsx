@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useCallback, useEffect, useState } from 'react';
 import { Route } from '~/routes/_layout/index';
 import { formatDate } from '~/utils/dates';
+import { isMobile } from '~/utils/useShareMessage';
 
 export function Cover() {
   const todaysGame = Route.useLoaderData();
@@ -13,16 +14,14 @@ export function Cover() {
   const handleShare = () => {
     setIsSharing(true);
 
-    // Try to use Web Share API if available
-    if (navigator.share) {
+    const shareMessage = `${window.location.href}\nCheck out this Wordle game!`;
+
+    // Use Web Share API on mobile
+    if (navigator.share && isMobile()) {
       navigator
-        .share({
-          title: `Tippsle #${todaysGame.id} - ${formatDate(todaysGame.date)}`,
-          url: window.location.href,
-          text: 'Check out this Wordle game!',
-        })
+        .share({ text: shareMessage })
         .then(() => {
-          toast.success('Shared successfully!');
+          // toast.success('Shared successfully!');
         })
         .catch((error) => {
           // If user cancels share, don't show error
@@ -36,14 +35,11 @@ export function Cover() {
           }, 300);
         });
     } else {
-      // Fallback to clipboard if Web Share API is not available
-      const shareMessage = `Tippsle #${todaysGame.id} - ${formatDate(todaysGame.date)}
-      ${window.location.href}
-      Check out this Wordle game!`;
+      // Fallback to clipboard for Desktop or if Web Share API is not available
       navigator.clipboard
         .writeText(shareMessage)
         .then(() => {
-          toast.success('Link copied to clipboard!');
+          toast.success('Copied to clipboard!');
         })
         .catch(() => {
           toast.error('Failed to copy link');
