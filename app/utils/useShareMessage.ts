@@ -35,8 +35,7 @@ function getShareMessage({
 
   const shareMessage = `Tippsle #${id} ${currentRow}/6${chosenBy ? `\n${chosenBy}'s word` : ''}
 
-${emojiGrid}
-`;
+${emojiGrid}\n`;
 
   return shareMessage;
 }
