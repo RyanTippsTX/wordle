@@ -25,12 +25,12 @@ export function End() {
     handleSpin();
     setIsSharing(true);
 
-    // Try to use Web Share API if available
+    // Use Web Share API on mobile
     if (navigator.share && isMobile()) {
       navigator
         .share({ text: shareMessage })
         .then(() => {
-          toast.success('Shared successfully!');
+          // toast.success('Shared successfully!');
         })
         .catch((error) => {
           // If user cancels share, don't show error
@@ -44,7 +44,7 @@ export function End() {
           }, 300);
         });
     } else {
-      // Fallback to clipboard if Web Share API is not available
+      // Fallback to clipboard for Desktop or if Web Share API is not available
       navigator.clipboard
         .writeText(shareMessage)
         .then(() => {
