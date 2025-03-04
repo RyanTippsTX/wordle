@@ -39,7 +39,7 @@ export function Cover() {
       navigator.clipboard
         .writeText(shareMessage)
         .then(() => {
-          toast.success('Copied to clipboard!');
+          toast.success('Copied to clipboard!', { duration: 2000 });
         })
         .catch(() => {
           toast.error('Failed to copy link');

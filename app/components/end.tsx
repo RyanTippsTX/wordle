@@ -48,7 +48,7 @@ export function End() {
       navigator.clipboard
         .writeText(shareMessage)
         .then(() => {
-          toast.success('Results copied to clipboard!');
+          toast.success('Results copied to clipboard!', { duration: 2000 });
         })
         .catch(() => {
           toast.error('Failed to copy link');
