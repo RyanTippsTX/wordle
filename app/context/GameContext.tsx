@@ -48,21 +48,37 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [isShaking, setIsShaking] = useState(false);
   const currentLetter = guesses[currentRow]?.length;
   const [showEnd, setShowEnd] = useState(false);
+  const showGame = !showEnd && !showRules && started;
   const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
   const guessedLetters = new Set(pastGuesses.flat());
 
   const didGuessSolution = pastGuesses.slice(-1)[0]?.join('') === solution;
   const gameOver = currentRow === 6 || didGuessSolution;
 
+  const [solutionToastId, setSolutionToastId] = useState<string | undefined>();
+
+  // Win toast
   useEffect(() => {
-    if (gameOver) {
-      if (didGuessSolution) {
-        toast.success('Great job!', { duration: Infinity, icon: '🎉' });
-      } else {
-        toast.error(solution.toUpperCase(), { duration: Infinity, icon: '💀' });
-      }
+    if (gameOver && didGuessSolution) {
+      toast.success('Great job!', { icon: '🎉' });
     }
   }, [gameOver, didGuessSolution, solution]);
+
+  // Perpetual lose toast
+  useEffect(() => {
+    if (gameOver && !didGuessSolution && showGame && !solutionToastId) {
+      const id = toast.error(solution.toUpperCase(), { duration: Infinity, icon: '💀' });
+      setSolutionToastId(id);
+    }
+  }, [gameOver, didGuessSolution, showGame, solutionToastId, solution]);
+
+  // Temp dismiss lose toast when viewing other pages
+  useEffect(() => {
+    if (!showGame && solutionToastId) {
+      toast.dismiss(solutionToastId);
+      setSolutionToastId(undefined);
+    }
+  }, [showGame, solutionToastId]);
 
   useEffect(() => {
     if (gameOver) {
