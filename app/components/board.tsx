@@ -10,7 +10,7 @@ export function Board() {
         space-y-1.5
         "
     >
-      {chosenBy.trim().length > 0 && (
+      {chosenBy && chosenBy.trim().length > 0 && (
         <div className="text-center mx-auto text-gray-300 text-lg pb-2 italic font-medium">
           Today's word chosen by {chosenBy}
         </div>
@@ -58,7 +58,7 @@ const Square = ({
     <div
       //
       className={twMerge(
-        'flex aspect-square w-14 sm:w-16 items-center justify-center text-3xl font-bold transition-colors duration-300 select-none',
+        'flex aspect-square w-12 sm:w-16 items-center justify-center text-3xl font-bold transition-colors duration-300 select-none',
         isCorrect
           ? 'bg-green-500'
           : isPresent
