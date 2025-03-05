@@ -8,7 +8,7 @@ import { isMobile } from '~/utils/useShareMessage';
 
 export function Cover() {
   const todaysGame = Route.useLoaderData();
-  const { setStarted } = useGameContext();
+  const { setStarted, guesses, setShowRules } = useGameContext();
   const [isSharing, setIsSharing] = useState(false);
 
   const handleShare = () => {
@@ -54,7 +54,13 @@ export function Cover() {
 
   const playGame = useCallback(() => {
     setStarted(true);
-  }, [setStarted]);
+    if (!guesses.length) setShowRules(true);
+  }, [setStarted, setShowRules, guesses]);
+
+  const showRulesThenPlay = useCallback(() => {
+    setStarted(true);
+    setShowRules(true);
+  }, [setShowRules, setStarted]);
 
   // Enter key will start game too
   useEffect(() => {
@@ -108,10 +114,10 @@ export function Cover() {
           className="w-40 h-12 py-2 px-4 bg-black text-white rounded-full border border-black"
           onClick={playGame}
         >
-          Play
+          {guesses.length ? 'Continue' : 'Play'}
         </button>
         <button
-          onClick={playGame} // hack - rules get shown anyways, just looks better with 3 buttons 🤫
+          onClick={showRulesThenPlay}
           className="w-40 h-12 py-2 px-4 text-black rounded-full border border-black"
         >
           Rules

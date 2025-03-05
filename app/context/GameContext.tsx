@@ -42,7 +42,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   // routing
   const [started, setStarted] = useState(false);
-  const [showRules, setShowRules] = useState(true);
+  const [showRules, setShowRules] = useState(false);
   const [showEnd, setShowEnd] = useState(false);
   // ...derived
   const showGame = !showEnd && !showRules && started;
