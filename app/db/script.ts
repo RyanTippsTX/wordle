@@ -1,41 +1,41 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { eq } from 'drizzle-orm';
-import { usersTable } from './schema';
+import { gamesTable } from './schema';
 
 const db = drizzle(process.env.DATABASE_URL!);
 
 async function main() {
-  const user: typeof usersTable.$inferInsert = {
-    name: 'John',
-    age: 30,
-    email: 'john@example.com',
+  const game: typeof gamesTable.$inferInsert = {
+    date: '2024-11-16',
+    solution: 'house',
+    chosenBy: 'Alex T.',
   };
 
-  await db.insert(usersTable).values(user);
-  console.log('New user created!');
+  await db.insert(gamesTable).values(game);
+  console.log('New game created!');
 
-  const users = await db.select().from(usersTable);
-  console.log('Getting all users from the database: ', users);
+  const games = await db.select().from(gamesTable);
+  console.log('Getting all games from the database: ', games);
   /*
-  const users: {
+  const games: {
     id: number;
-    name: string;
-    age: number;
-    email: string;
+    date: string;
+    solution: string;
+    chosenBy: string;
   }[]
   */
 
   await db
-    .update(usersTable)
+    .update(gamesTable)
     .set({
-      age: 31,
+      solution: 'trees',
     })
-    .where(eq(usersTable.email, user.email));
-  console.log('User info updated!');
+    .where(eq(gamesTable.date, '2024-11-16'));
+  console.log('Game info updated!');
 
-  // await db.delete(usersTable).where(eq(usersTable.email, user.email));
-  // console.log('User deleted!');
+  // await db.delete(gamesTable).where(eq(gamesTable.date, '2024-11-16'));
+  // console.log('Game deleted!');
 }
 
 main();
