@@ -84,6 +84,12 @@ const KeyboardKey = ({
     guess.some((letter, index) => letter === thisKey && solution[index] === letter),
   );
 
+  // Add touch event handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent default behavior
+    handleKeyPress({ key: thisKey } as KeyboardEvent);
+  };
+
   return (
     <div
       className={twMerge(
@@ -96,7 +102,8 @@ const KeyboardKey = ({
           isGuessed &&
           (isCorrect ? 'bg-green-500' : isInSolution ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
-      onClick={() => handleKeyPress({ key: thisKey } as KeyboardEvent)} // dirty, fix later
+      onClick={() => handleKeyPress({ key: thisKey } as KeyboardEvent)}
+      onTouchStart={handleTouchStart} // Add touch event handler
     >
       {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? <Delete /> : thisKey.toUpperCase()}
     </div>
