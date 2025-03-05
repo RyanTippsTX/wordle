@@ -30,7 +30,6 @@ function Home() {
     showEnd,
     showRules,
     setGuesses,
-    setCurrentRow,
     handleKeyPress,
     setShowRules,
     chosenBy,

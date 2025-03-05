@@ -31,7 +31,7 @@ function getShareMessage({
     letter === solution[index] ? '🟩' : solution.includes(letter) ? '🟨' : '⬛';
   const lettersToEmojis = (guess: string[]) => guess.map(letterToEmoji).join('');
 
-  const emojiGrid = guesses.slice(0, currentRow).map(lettersToEmojis).join('\n');
+  const emojiGrid = guesses.map(lettersToEmojis).join('\n');
 
   const shareMessage = `Tippsle #${id} ${currentRow}/6${chosenBy ? `\n${chosenBy}'s word` : ''}
 

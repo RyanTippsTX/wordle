@@ -71,18 +71,16 @@ const KeyboardKey = ({
     solution,
     guessedLetters,
     guesses,
-    pastGuesses,
     currentRow,
     currentLetter,
     gameOver,
     setGuesses,
-    setCurrentRow,
     handleKeyPress,
   } = useGameContext();
 
   const isGuessed = guessedLetters.has(thisKey);
   const isInSolution = solution.includes(thisKey);
-  const isCorrect = pastGuesses.some((guess) =>
+  const isCorrect = guesses.some((guess) =>
     guess.some((letter, index) => letter === thisKey && solution[index] === letter),
   );
 

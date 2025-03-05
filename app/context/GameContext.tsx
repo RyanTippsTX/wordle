@@ -18,15 +18,14 @@ interface GameState {
   setStarted: (started: boolean) => void;
   showRules: boolean;
   setShowRules: (showRules: boolean) => void;
-  pastGuesses: string[][];
   guesses: string[][];
+  stagedGuess: string[];
   currentRow: number;
   currentLetter: number;
   gameOver: boolean;
   showEnd: boolean;
   setShowEnd: (showEnd: boolean) => void;
   setGuesses: React.Dispatch<React.SetStateAction<string[][]>>;
-  setCurrentRow: React.Dispatch<React.SetStateAction<number>>;
   handleKeyPress: (e: KeyboardEvent) => void;
   isShaking: boolean;
 }
@@ -34,7 +33,6 @@ interface GameState {
 const GameContext = createContext<GameState | undefined>(undefined);
 
 const letters = 'abcdefghijklmnopqrstuvwxyz';
-const defaultGuesses = [[], [], [], [], [], []];
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   // constants - might break at midnight
@@ -50,18 +48,29 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const showGame = !showEnd && !showRules && started;
 
   // game state
-  const [guesses, setGuesses] = useState<string[][]>(defaultGuesses);
-  const [currentRow, setCurrentRow] = useState(0);
+  const [guesses, setGuesses] = useState<string[][]>([]);
+  const [stagedGuess, setStagedGuess] = useState<string[]>([]); // array of letters
   // ...derived
-  const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
-  const currentLetter = guesses[currentRow]?.length;
-  const guessedLetters = new Set(pastGuesses.flat());
-  const didGuessSolution = pastGuesses.slice(-1)[0]?.join('') === solution;
-  const gameOver = currentRow === 6 || didGuessSolution;
+  const currentRow = guesses.length;
+  const currentLetter = stagedGuess.length;
+  const guessedLetters = new Set(guesses.flat());
+  const didGuessSolution = guesses.length && guesses[guesses.length - 1].join('') === solution;
+  const gameOver = didGuessSolution || guesses.length === 6;
 
   // animation helpers
   const [isShaking, setIsShaking] = useState(false);
   const [solutionToastId, setSolutionToastId] = useState<string | undefined>();
+
+  // // on each guess, save game state locally
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     'gameState',
+  //     JSON.stringify({
+  //       guesses,
+  //       currentRow,
+  //     }),
+  //   );
+  // }, [guesses, currentRow]);
 
   // Win toast
   useEffect(() => {
@@ -86,6 +95,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [showGame, solutionToastId]);
 
+  // Show end screen after 2 seconds
   useEffect(() => {
     if (gameOver) {
       setTimeout(() => {
@@ -119,11 +129,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       // letters
       if (letters.includes(e.key.toLowerCase())) {
         if (currentLetter < 5) {
-          setGuesses((prev) => {
-            const newGuesses = [...prev];
-            newGuesses[currentRow][currentLetter] = e.key.toLowerCase();
-            return newGuesses;
-          });
+          setStagedGuess((prev) => [...prev, e.key.toLowerCase()]);
         } else return; // should not happen
       }
 
@@ -131,9 +137,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       if (e.key === 'Enter') {
         if (currentLetter === 5) {
           // check if word is valid
-          const currentGuess = guesses[currentRow].join('');
-          if (isValidWord(currentGuess)) {
-            setCurrentRow(currentRow + 1);
+          if (isValidWord(stagedGuess.join(''))) {
+            setGuesses((prev) => [...prev, stagedGuess]);
+            setStagedGuess([]);
           } else {
             toast.error('Not in word list');
 
@@ -155,14 +161,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
       // delete
       if (e.key === 'Backspace') {
-        setGuesses((prev) => {
-          const newGuesses = [...prev];
-          newGuesses[currentRow] = newGuesses[currentRow].slice(0, -1);
-          return newGuesses;
-        });
+        setStagedGuess((prev) => prev.slice(0, -1)); // safe to do on empty array
       }
     },
-    [currentLetter, currentRow, setGuesses, setCurrentRow, started, gameOver, guesses, showRules],
+    [currentLetter, setGuesses, stagedGuess, setStagedGuess, started, gameOver, showRules],
   );
 
   return (
@@ -177,13 +179,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setShowRules,
         showEnd,
         setShowEnd,
-        pastGuesses,
         guesses,
+        stagedGuess,
         currentRow,
         currentLetter,
         gameOver,
         setGuesses,
-        setCurrentRow,
         handleKeyPress,
         isShaking,
       }}

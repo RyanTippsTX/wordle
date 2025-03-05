@@ -15,26 +15,23 @@ export function Board() {
           Today's word chosen by {chosenBy}
         </div>
       )}
-      {/* fix */}
-      {guesses.map((guess, index) => (
-        <Row key={index} rowIndex={index} />
+
+      {new Array(6).fill(null).map((_, i) => (
+        <Row key={i} rowIndex={i} />
       ))}
     </div>
   );
 }
 
 const Row = ({ rowIndex }: { rowIndex: number }) => {
-  const { guesses, solution, currentRow, isShaking } = useGameContext();
-  const guess = guesses[rowIndex];
-  const untypedLetters = 5 - guess.length;
-  const letters = [...guess, ...Array(untypedLetters).fill(' ')];
+  const { guesses, stagedGuess, currentRow, isShaking } = useGameContext();
   const isCurrentRow = rowIndex === currentRow;
   const shouldShake = isShaking && isCurrentRow;
-
+  const letters = isCurrentRow ? stagedGuess : guesses[rowIndex];
   return (
     <div className={twMerge('flex gap-x-1.5', shouldShake && 'animate-shake')}>
-      {letters.map((letter, letterIndex) => (
-        <Square key={letterIndex} letter={letter} letterIndex={letterIndex} rowIndex={rowIndex} />
+      {new Array(5).fill(null).map((_, i) => (
+        <Square key={i} letter={letters?.[i] || ' '} letterIndex={i} rowIndex={rowIndex} />
       ))}
     </div>
   );
