@@ -61,6 +61,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [isShaking, setIsShaking] = useState(false);
   const [solutionToastId, setSolutionToastId] = useState<string | undefined>();
 
+  // if todays game id changes, clear game state from React state
+  // not sure if this will be needed, but it's a precaution.
+  // WARNING: this effect must be before the backup/restore effects
+  useEffect(() => {
+    setGuesses([]);
+  }, [todaysGame.id]);
+
   // restore game state from local storage
   useEffect(() => {
     const gameState = localStorage.getItem(`${todaysGame.id}`);
