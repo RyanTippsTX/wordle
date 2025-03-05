@@ -34,27 +34,33 @@ interface GameState {
 const GameContext = createContext<GameState | undefined>(undefined);
 
 const letters = 'abcdefghijklmnopqrstuvwxyz';
+const defaultGuesses = [[], [], [], [], [], []];
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
+  // constants - might break at midnight
   const todaysGame = Route.useLoaderData();
   const solution = todaysGame.solution;
   const chosenBy = todaysGame.chosenBy;
 
+  // routing
   const [started, setStarted] = useState(false);
   const [showRules, setShowRules] = useState(true);
-  const defaultGuesses = [[], [], [], [], [], []];
+  const [showEnd, setShowEnd] = useState(false);
+  // ...derived
+  const showGame = !showEnd && !showRules && started;
+
+  // game state
   const [guesses, setGuesses] = useState<string[][]>(defaultGuesses);
   const [currentRow, setCurrentRow] = useState(0);
-  const [isShaking, setIsShaking] = useState(false);
-  const currentLetter = guesses[currentRow]?.length;
-  const [showEnd, setShowEnd] = useState(false);
-  const showGame = !showEnd && !showRules && started;
+  // ...derived
   const pastGuesses = currentRow > 0 ? guesses.slice(0, currentRow) : [];
+  const currentLetter = guesses[currentRow]?.length;
   const guessedLetters = new Set(pastGuesses.flat());
-
   const didGuessSolution = pastGuesses.slice(-1)[0]?.join('') === solution;
   const gameOver = currentRow === 6 || didGuessSolution;
 
+  // animation helpers
+  const [isShaking, setIsShaking] = useState(false);
   const [solutionToastId, setSolutionToastId] = useState<string | undefined>();
 
   // Win toast

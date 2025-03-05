@@ -15,6 +15,7 @@ export function Board() {
           Today's word chosen by {chosenBy}
         </div>
       )}
+      {/* fix */}
       {guesses.map((guess, index) => (
         <Row key={index} rowIndex={index} />
       ))}
