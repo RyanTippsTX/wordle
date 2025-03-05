@@ -76,6 +76,7 @@ const KeyboardKey = ({
     gameOver,
     setGuesses,
     handleKeyPress,
+    isTouchDevice,
   } = useGameContext();
 
   const isGuessed = guessedLetters.has(thisKey);
@@ -102,8 +103,9 @@ const KeyboardKey = ({
           isGuessed &&
           (isCorrect ? 'bg-green-500' : isInSolution ? 'bg-yellow-500' : 'bg-neutral-700'),
       )}
-      onClick={() => handleKeyPress({ key: thisKey } as KeyboardEvent)}
-      onTouchStart={handleTouchStart} // Add touch event handler
+      {...(isTouchDevice
+        ? { onTouchStart: handleTouchStart }
+        : { onClick: () => handleKeyPress({ key: thisKey } as KeyboardEvent) })}
     >
       {thisKey === 'Enter' ? 'ENTER' : thisKey === 'Backspace' ? <Delete /> : thisKey.toUpperCase()}
     </div>

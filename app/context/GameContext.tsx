@@ -28,6 +28,7 @@ interface GameState {
   setGuesses: React.Dispatch<React.SetStateAction<string[][]>>;
   handleKeyPress: (e: KeyboardEvent) => void;
   isShaking: boolean;
+  isTouchDevice: boolean;
 }
 
 const GameContext = createContext<GameState | undefined>(undefined);
@@ -57,7 +58,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const didGuessSolution = guesses.length && guesses[guesses.length - 1].join('') === solution;
   const gameOver = didGuessSolution || guesses.length === 6;
 
-  // animation helpers
+  // misc helpers
   const [isShaking, setIsShaking] = useState(false);
   const [solutionToastId, setSolutionToastId] = useState<string | undefined>();
 
@@ -117,6 +118,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       }, 2000);
     }
   }, [gameOver]);
+
+  // Detect touch device on mount
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
@@ -201,6 +208,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setGuesses,
         handleKeyPress,
         isShaking,
+        isTouchDevice,
       }}
     >
       {children}
