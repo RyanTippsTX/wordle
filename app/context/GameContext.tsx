@@ -55,7 +55,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const currentRow = guesses.length;
   const currentLetter = stagedGuess.length;
   const guessedLetters = new Set(guesses.flat());
-  const didGuessSolution = guesses.length && guesses[guesses.length - 1].join('') === solution;
+  const didGuessSolution = !!guesses.length && guesses[guesses.length - 1].join('') === solution;
   const gameOver = didGuessSolution || guesses.length === 6;
 
   // misc helpers
