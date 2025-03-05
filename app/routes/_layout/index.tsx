@@ -42,7 +42,7 @@ function Home() {
     };
   }, [handleKeyPress]);
 
-  if (showCover) {
+  if (showCover && !gameOver) {
     return <Cover />;
   }
 
