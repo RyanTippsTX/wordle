@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/start';
-import { db, gamesTable } from '../db/schema';
+import { db, gamesTable, playsTable } from '../db/schema';
 import { eq } from 'drizzle-orm';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
@@ -32,8 +32,18 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     return todaysGame || fallBackGame;
   });
 
-export const saveGameState = createServerFn({ method: 'POST' })
-  .validator((data: { url: string; ttl: number }) => data)
+export const trackPlayInstance = createServerFn({ method: 'POST' })
+  .validator(
+    (data: {
+      //
+      gameId: number;
+      guessCount: number;
+      solved: boolean;
+    }) => data,
+  )
   .handler(async ({ data }) => {
-    console.log('🔥 ', data);
+    console.log('🔥 trackPlayInstance', data);
+
+    const play = await db.insert(playsTable).values(data).returning();
+    console.log('🔥 play', play);
   });
