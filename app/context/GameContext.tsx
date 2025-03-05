@@ -61,16 +61,23 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [isShaking, setIsShaking] = useState(false);
   const [solutionToastId, setSolutionToastId] = useState<string | undefined>();
 
-  // // on each guess, save game state locally
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     'gameState',
-  //     JSON.stringify({
-  //       guesses,
-  //       currentRow,
-  //     }),
-  //   );
-  // }, [guesses, currentRow]);
+  // restore game state from local storage
+  useEffect(() => {
+    const gameState = localStorage.getItem(`${todaysGame.id}`);
+    if (gameState) {
+      setGuesses(JSON.parse(gameState).guesses);
+    }
+  }, [todaysGame.id]);
+
+  // on each guess, backup game state locally
+  useEffect(() => {
+    localStorage.setItem(
+      `${todaysGame.id}`,
+      JSON.stringify({
+        guesses,
+      }),
+    );
+  }, [guesses, todaysGame.id]);
 
   // Win toast
   useEffect(() => {
