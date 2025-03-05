@@ -8,7 +8,7 @@ import { isMobile } from '~/utils/useShareMessage';
 
 export function Cover() {
   const todaysGame = Route.useLoaderData();
-  const { setStarted, guesses, setShowRules } = useGameContext();
+  const { setShowCover, guesses, setShowRules } = useGameContext();
   const [isSharing, setIsSharing] = useState(false);
 
   const handleShare = () => {
@@ -53,14 +53,14 @@ export function Cover() {
   };
 
   const playGame = useCallback(() => {
-    setStarted(true);
+    setShowCover(false);
     if (!guesses.length) setShowRules(true);
-  }, [setStarted, setShowRules, guesses]);
+  }, [setShowCover, setShowRules, guesses]);
 
   const showRulesThenPlay = useCallback(() => {
-    setStarted(true);
+    setShowCover(false);
     setShowRules(true);
-  }, [setShowRules, setStarted]);
+  }, [setShowRules, setShowCover]);
 
   // Enter key will start game too
   useEffect(() => {

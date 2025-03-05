@@ -21,8 +21,8 @@ function Home() {
   // console.log('🔥 ', todaysGame);
 
   const {
-    started,
-    setStarted,
+    showCover,
+    setShowCover,
     guesses,
     currentRow,
     currentLetter,
@@ -42,7 +42,7 @@ function Home() {
     };
   }, [handleKeyPress]);
 
-  if (!started) {
+  if (showCover) {
     return <Cover />;
   }
 

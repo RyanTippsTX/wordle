@@ -14,8 +14,8 @@ interface GameState {
   solution: string;
   chosenBy: string | null;
   guessedLetters: Set<string>;
-  started: boolean;
-  setStarted: (started: boolean) => void;
+  showCover: boolean;
+  setShowCover: (showCover: boolean) => void;
   showRules: boolean;
   setShowRules: (showRules: boolean) => void;
   guesses: string[][];
@@ -42,11 +42,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const chosenBy = todaysGame.chosenBy;
 
   // routing
-  const [started, setStarted] = useState(false);
+  const [showCover, setShowCover] = useState(true);
   const [showRules, setShowRules] = useState(false);
   const [showEnd, setShowEnd] = useState(false);
   // ...derived
-  const showGame = !showEnd && !showRules && started;
+  const showGame = !showEnd && !showRules && !showCover;
 
   // game state
   const [guesses, setGuesses] = useState<string[][]>([]);
@@ -128,7 +128,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
       // ignore until game starts
-      if (!started) {
+      if (showCover) {
         return;
       }
 
@@ -185,7 +185,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setStagedGuess((prev) => prev.slice(0, -1)); // safe to do on empty array
       }
     },
-    [currentLetter, setGuesses, stagedGuess, setStagedGuess, started, gameOver, showRules],
+    [currentLetter, setGuesses, stagedGuess, setStagedGuess, showCover, gameOver, showRules],
   );
 
   return (
@@ -194,8 +194,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         solution,
         chosenBy,
         guessedLetters,
-        started,
-        setStarted,
+        showCover,
+        setShowCover,
         showRules,
         setShowRules,
         showEnd,
