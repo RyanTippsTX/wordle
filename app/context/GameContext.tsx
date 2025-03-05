@@ -75,7 +75,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   // Win toast
   useEffect(() => {
     if (gameOver && didGuessSolution) {
-      toast.success('Great job!', { icon: '🎉' });
+      toast.success('Great job!', { icon: '🎉', duration: 2000 });
     }
   }, [gameOver, didGuessSolution, solution]);
 
