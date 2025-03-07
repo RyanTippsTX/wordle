@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/start';
 import { getCookie, setCookie } from '@tanstack/start/server';
 import { db, gamesTable, playsTable } from '../db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
   id: 0,
@@ -60,6 +60,14 @@ export const trackPlayInstance = createServerFn({ method: 'POST' })
     const play = await db
       .insert(playsTable)
       .values({ ...data, playerId })
+      .onConflictDoUpdate({
+        target: playsTable.playerId,
+        set: {
+          guessCount: data.guessCount,
+          solved: data.solved,
+          lastGuessAt: sql`CURRENT_TIMESTAMP`,
+        },
+      })
       .returning();
-    console.log('🔥 play', play);
+    // console.log('🔥 play', play);
   });
