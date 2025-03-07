@@ -57,7 +57,7 @@ export const trackPlayInstance = createServerFn({ method: 'POST' })
     }) => data,
   )
   .handler(async ({ data }) => {
-    console.log('🔥 trackPlayInstance', data);
+    // console.log('🔥 trackPlayInstance', data);
     const playerId = getCookie('playerId');
 
     // TODO: upsert instead of insert
