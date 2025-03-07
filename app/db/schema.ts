@@ -42,8 +42,7 @@ export const playsTable = pgTable(
 
 // word list, for guesses & answers
 export const wordsTable = pgTable('words', {
-  id: uuid().primaryKey().defaultRandom(),
-  word: varchar({ length: 5 }).unique().notNull(),
+  word: varchar({ length: 5 }).primaryKey().notNull(),
   // isEligibleSolution: boolean().notNull().default(true), // consider adding in future
   createdAt: timestamp().notNull().defaultNow(), // unused, but why not
 });
