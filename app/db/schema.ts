@@ -10,6 +10,7 @@ import {
   boolean,
   serial,
   varchar,
+  unique,
 } from 'drizzle-orm/pg-core';
 
 if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
@@ -27,18 +28,25 @@ export const gamesTable = pgTable('games', {
 });
 
 // represents each play of the game
-export const playsTable = pgTable('plays', {
-  id: uuid().primaryKey().defaultRandom(),
-  playerId: uuid(), // might be null if cookies blocked
-  gameId: integer()
-    .notNull()
-    .references(() => gamesTable.id), // which day/game
-  guessCount: integer().notNull(), // not counted until they make initial guess
-  solved: boolean().notNull().default(false),
-  // startedAt: timestamp().notNull().defaultNow(), // consider adding in future
-  firstGuessAt: timestamp().notNull().defaultNow(),
-  lastGuessAt: timestamp().notNull().defaultNow(),
-});
+export const playsTable = pgTable(
+  'plays',
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    playerId: uuid(), // might be null if cookies blocked
+    gameId: integer()
+      .notNull()
+      .references(() => gamesTable.id), // which day/game
+    guessCount: integer().notNull(), // not counted until they make initial guess
+    solved: boolean().notNull().default(false),
+    // startedAt: timestamp().notNull().defaultNow(), // consider adding in future
+    firstGuessAt: timestamp().notNull().defaultNow(),
+    lastGuessAt: timestamp().notNull().defaultNow(),
+  },
+  (table) => [
+    // each player can only play a game once
+    unique().on(table.playerId, table.gameId),
+  ],
+);
 
 // word list, for guesses & answers
 export const wordsTable = pgTable('words', {

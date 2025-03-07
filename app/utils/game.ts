@@ -64,13 +64,13 @@ export const trackPlayInstance = createServerFn({ method: 'POST' })
       .insert(playsTable)
       .values({ ...data, playerId })
       .onConflictDoUpdate({
-        target: playsTable.playerId,
+        target: [playsTable.playerId, playsTable.gameId],
         set: {
           guessCount: data.guessCount,
           solved: data.solved,
           lastGuessAt: sql`CURRENT_TIMESTAMP`,
         },
-      })
-      .returning();
+      });
+    // .returning();
     // console.log('🔥 play', play);
   });
