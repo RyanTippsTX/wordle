@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { isValidWord } from '~/utils/word';
+import { isValidWord } from '~/utils/wordsValid';
 import toast from 'react-hot-toast';
 import { Route } from '~/routes/_layout/index';
 import { trackPlayInstance } from '~/utils/game';
