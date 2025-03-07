@@ -1,5 +1,8 @@
 // Import the word list as a string
-import wordList from './words.txt?raw';
+import { sql } from 'drizzle-orm';
+import { db } from '~/db/db';
+import { wordsTable } from '~/db/schema';
+import wordList from './word-list.txt?raw';
 
 const wordArray = wordList
   .split('\n')
@@ -26,3 +29,25 @@ export function getRandomWord(): string {
   const words = Array.from(wordSet);
   return words[Math.floor(Math.random() * words.length)];
 }
+
+export const addWordsToDb = async (words: string[]) => {
+  const wordsToAdd = words.filter((w) => w.length === 5).map((w) => ({ word: w }));
+  const result = await db
+    .insert(wordsTable)
+    .values(wordsToAdd)
+    .onConflictDoNothing({
+      target: [wordsTable.word],
+    })
+    .returning();
+  console.log('🔥 addWords result', result);
+  return result;
+};
+
+export const getRandomWordFromDb = async () => {
+  const result = await db
+    .select()
+    .from(wordsTable)
+    .orderBy(sql`RANDOM()`)
+    .limit(1);
+  return result[0].word;
+};

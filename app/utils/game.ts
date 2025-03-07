@@ -1,8 +1,9 @@
 import { createServerFn } from '@tanstack/start';
 import { getCookie, setCookie } from '@tanstack/start/server';
 import { db } from '../db/db';
-import { gamesTable, playsTable } from '../db/schema';
+import { gamesTable, playsTable, wordsTable } from '../db/schema';
 import { eq, sql } from 'drizzle-orm';
+import { getRandomWord } from './word';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
   gameId: 0,
@@ -10,6 +11,18 @@ const fallBackGame: typeof gamesTable.$inferSelect = {
   solution: 'house',
   chosenBy: 'Doris T.',
 };
+
+// export const generateNextGame = async () => {
+//   const randomWord = getRandomWord();
+//   const word = await db.insert(wordsTable).values({
+//     word: randomWord,
+//   });
+//   const game = await db.insert(gamesTable).values({
+//     date: new Date().toISOString(),
+//     solution: randomWord,
+//   });
+//   return { game, word };
+// };
 
 export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
