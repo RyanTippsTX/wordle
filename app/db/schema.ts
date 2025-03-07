@@ -29,6 +29,7 @@ export const gamesTable = pgTable('games', {
 // represents each play of the game
 export const playsTable = pgTable('plays', {
   id: uuid().primaryKey().defaultRandom(),
+  playerId: uuid(), // might be null if cookies blocked
   gameId: integer()
     .notNull()
     .references(() => gamesTable.id), // which day/game

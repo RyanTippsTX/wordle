@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/start';
+import { getCookie, setCookie } from '@tanstack/start/server';
 import { db, gamesTable, playsTable } from '../db/schema';
 import { eq } from 'drizzle-orm';
 
@@ -12,6 +13,16 @@ const fallBackGame: typeof gamesTable.$inferSelect = {
 export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
   .handler(async ({ data }) => {
+    const playerId = getCookie('playerId');
+    // console.log('🔥 getCookie playerId', playerId);
+
+    if (!playerId) {
+      // generate a new playerId, no need to save in db. Many will be thrown away before they ever play a game.
+      const uuid = crypto.randomUUID();
+      setCookie('playerId', uuid);
+      // console.log('🔥 setCookie playerId', uuid);
+    }
+
     /** YYYY-MM-DD in server's timezone */
     const today = new Intl.DateTimeFormat('en-CA', {
       timeZone: 'America/Chicago', // Central Time (CST/CDT)
@@ -27,7 +38,7 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
       .where(eq(gamesTable.date, today));
 
     const todaysGame = games[0];
-    console.log('🔥 todaysGame', todaysGame);
+    // console.log('🔥 todaysGame', todaysGame);
 
     return todaysGame || fallBackGame;
   });
