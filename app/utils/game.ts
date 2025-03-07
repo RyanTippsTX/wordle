@@ -19,7 +19,10 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     if (!playerId) {
       // generate a new playerId, no need to save in db. Many will be thrown away before they ever play a game.
       const uuid = crypto.randomUUID();
-      setCookie('playerId', uuid);
+      setCookie('playerId', uuid, {
+        maxAge: 60 * 60 * 24 * 365 * 10, // 10 years
+        sameSite: 'strict', // only sent in same-site requests
+      });
       // console.log('🔥 setCookie playerId', uuid);
     }
 
