@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { eq } from 'drizzle-orm';
-import { db, gamesTable } from './schema';
-
+import { gamesTable } from './schema';
+import { db } from './db';
 async function main() {
   const game: typeof gamesTable.$inferInsert = {
     date: '2024-11-16',

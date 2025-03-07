@@ -1,5 +1,3 @@
-import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/neon-http';
 import {
   date,
   integer,
@@ -12,12 +10,6 @@ import {
   varchar,
   unique,
 } from 'drizzle-orm/pg-core';
-
-if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
-
-export const db = drizzle(process.env.DATABASE_URL, {
-  // casing: 'snake_case', // not working https://github.com/drizzle-team/drizzle-orm/issues/3094
-});
 
 // represents each day's game definition
 export const gamesTable = pgTable('games', {

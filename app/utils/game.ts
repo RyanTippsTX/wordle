@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/start';
 import { getCookie, setCookie } from '@tanstack/start/server';
-import { db, gamesTable, playsTable } from '../db/schema';
+import { db } from '../db/db';
+import { gamesTable, playsTable } from '../db/schema';
 import { eq, sql } from 'drizzle-orm';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
