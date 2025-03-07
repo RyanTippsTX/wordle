@@ -67,36 +67,36 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   // WARNING: this effect must be before the backup/restore effects
   useEffect(() => {
     setGuesses([]);
-  }, [todaysGame.id]);
+  }, [todaysGame.gameId]);
 
   // restore game state from local storage
   useEffect(() => {
-    const gameState = localStorage.getItem(`${todaysGame.id}`);
+    const gameState = localStorage.getItem(`${todaysGame.gameId}`);
     if (gameState) {
       setGuesses(JSON.parse(gameState).guesses);
     }
-  }, [todaysGame.id]);
+  }, [todaysGame.gameId]);
 
   // on each guess, backup game state locally
   useEffect(() => {
     localStorage.setItem(
-      `${todaysGame.id}`,
+      `${todaysGame.gameId}`,
       JSON.stringify({
         guesses,
       }),
     );
-  }, [guesses, todaysGame.id]);
+  }, [guesses, todaysGame.gameId]);
 
   // trackPlayInstance
   useEffect(() => {
     trackPlayInstance({
       data: {
-        gameId: todaysGame.id,
+        gameId: todaysGame.gameId,
         guessCount: guesses.length,
         solved: didGuessSolution,
       },
     });
-  }, [guesses, didGuessSolution, todaysGame.id]);
+  }, [guesses, didGuessSolution, todaysGame.gameId]);
 
   // Win toast
   useEffect(() => {

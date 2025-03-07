@@ -133,7 +133,7 @@ export function Cover() {
 
       <div className="mt-8 text-center">
         <div className="font-semibold text-sm">{formatDate(todaysGame.date)}</div>
-        <div className="text-sm">No. {todaysGame.id}</div>
+        <div className="text-sm">No. {todaysGame.gameId}</div>
         <div className="text-sm">Edited by Ryan Tipps</div>
       </div>
     </div>

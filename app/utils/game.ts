@@ -5,7 +5,7 @@ import { gamesTable, playsTable } from '../db/schema';
 import { eq, sql } from 'drizzle-orm';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
-  id: 0,
+  gameId: 0,
   date: '1999-12-31',
   solution: 'house',
   chosenBy: 'Doris T.',
@@ -38,7 +38,7 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     const games = await db
       .select()
       .from(gamesTable)
-      // .where(eq(gamesTable.id, 11))
+      // .where(eq(gamesTable.gameId, 11))
       .where(eq(gamesTable.date, today));
 
     const todaysGame = games[0];

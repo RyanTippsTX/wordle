@@ -13,7 +13,7 @@ import {
 
 // represents each day's game definition
 export const gamesTable = pgTable('games', {
-  id: serial().primaryKey(),
+  gameId: serial().primaryKey(),
   date: date().unique().notNull().defaultNow(),
   solution: varchar({ length: 5 }).notNull(),
   chosenBy: text(),
@@ -23,11 +23,11 @@ export const gamesTable = pgTable('games', {
 export const playsTable = pgTable(
   'plays',
   {
-    id: uuid().primaryKey().defaultRandom(),
+    playId: uuid().primaryKey().defaultRandom(),
     playerId: uuid(), // might be null if cookies blocked
     gameId: integer()
       .notNull()
-      .references(() => gamesTable.id), // which day/game
+      .references(() => gamesTable.gameId), // which day/game
     guessCount: integer().notNull(), // not counted until they make initial guess
     solved: boolean().notNull().default(false),
     // startedAt: timestamp().notNull().defaultNow(), // consider adding in future
