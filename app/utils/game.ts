@@ -3,7 +3,6 @@ import { getCookie, setCookie } from '@tanstack/start/server';
 import { db } from '../db/db';
 import { gamesTable, playsTable, wordsTable } from '../db/schema';
 import { eq, sql } from 'drizzle-orm';
-import { getRandomWord } from './word';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
   gameId: 0,
@@ -55,7 +54,7 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
       .where(eq(gamesTable.date, today));
 
     const todaysGame = games[0];
-    // console.log('🔥 todaysGame', todaysGame);
+    console.log('🔥 todaysGame', todaysGame);
 
     return todaysGame || fallBackGame;
   });
