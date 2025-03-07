@@ -1,6 +1,5 @@
 // app/routes/__root.tsx
-import { Outlet, createRootRoute } from '@tanstack/react-router';
-import { Meta, Scripts } from '@tanstack/start';
+import { Outlet, createRootRoute, HeadContent, Scripts } from '@tanstack/react-router';
 import appCss from '~/styles/app.css?url';
 import type { ReactNode } from 'react';
 
@@ -42,7 +41,7 @@ export const Route = createRootRoute({
       {
         rel: 'preconnect',
         href: 'https://fonts.gstatic.com',
-        crossorigin: true,
+        // crossOrigin: 'true',
       },
       {
         rel: 'stylesheet',
@@ -75,7 +74,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html>
       <head>
-        <Meta />
+        <HeadContent />
       </head>
       <body>
         {children}
