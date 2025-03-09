@@ -2,23 +2,23 @@ import { useGameContext } from '~/context/GameContext';
 import { Route } from '~/routes/_layout/index';
 
 const useShareMessage = () => {
-  const { id, chosenBy, solution } = Route.useLoaderData();
+  const { gameId, chosenBy, solution } = Route.useLoaderData();
   const { gameOver, currentRow, guesses } = useGameContext();
 
-  return getShareMessage({ id, chosenBy, solution, gameOver, currentRow, guesses });
+  return getShareMessage({ gameId, chosenBy, solution, gameOver, currentRow, guesses });
 };
 
 export { useShareMessage };
 
 function getShareMessage({
-  id,
+  gameId,
   chosenBy,
   solution,
   gameOver,
   currentRow,
   guesses,
 }: {
-  id: number;
+  gameId: number;
   chosenBy: string | null;
   solution: string;
   gameOver: boolean;
@@ -33,7 +33,7 @@ function getShareMessage({
 
   const emojiGrid = guesses.map(lettersToEmojis).join('\n');
 
-  const shareMessage = `Tippsle #${id} ${currentRow}/6${chosenBy ? `\n${chosenBy}'s word` : ''}
+  const shareMessage = `Tippsle #${gameId} ${currentRow}/6${chosenBy ? `\n${chosenBy}'s word` : ''}
 
 ${emojiGrid}\n`;
 
