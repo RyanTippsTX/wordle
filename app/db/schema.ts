@@ -40,8 +40,8 @@ export const playsTable = pgTable(
   ],
 );
 
-// word list, for guesses & answers
-export const wordsTable = pgTable('words', {
+// word list, for cron to choose answers from
+export const solutionsPoolTable = pgTable('solutions_pool', {
   word: varchar({ length: 5 }).primaryKey().notNull(),
   // isEligibleSolution: boolean().notNull().default(true), // consider adding in future
   createdAt: timestamp().notNull().defaultNow(), // unused, but why not

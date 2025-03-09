@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/start';
 import { getCookie, setCookie } from '@tanstack/start/server';
 import { db } from '../db/db';
-import { gamesTable, playsTable, wordsTable } from '../db/schema';
+import { gamesTable, playsTable, solutionsPoolTable } from '../db/schema';
 import { eq, sql } from 'drizzle-orm';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
@@ -13,7 +13,7 @@ const fallBackGame: typeof gamesTable.$inferSelect = {
 
 // export const generateNextGame = async () => {
 //   const randomWord = getRandomWord();
-//   const word = await db.insert(wordsTable).values({
+//   const word = await db.insert(solutionsPoolTable).values({
 //     word: randomWord,
 //   });
 //   const game = await db.insert(gamesTable).values({
