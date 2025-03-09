@@ -89,13 +89,15 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   // trackPlayInstance
   useEffect(() => {
-    trackPlayInstance({
-      data: {
-        gameId: todaysGame.gameId,
-        guessCount: guesses.length,
-        solved: didGuessSolution,
-      },
-    });
+    if (guesses.length > 0) {
+      trackPlayInstance({
+        data: {
+          gameId: todaysGame.gameId,
+          guessCount: guesses.length,
+          solved: didGuessSolution,
+        },
+      });
+    }
   }, [guesses, didGuessSolution, todaysGame.gameId]);
 
   // Win toast
