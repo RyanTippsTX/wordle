@@ -20,10 +20,6 @@ export const Route = createRootRoute({
         charSet: 'utf-8',
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
         title: 'Tippsle — A  5 Letter Word Game',
         //              ^this is an Em dash
       },
