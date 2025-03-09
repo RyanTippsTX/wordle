@@ -5,5 +5,5 @@ if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
 
 export const db = drizzle({
   connection: process.env.DATABASE_URL,
-  casing: 'snake_case', // not working https://github.com/drizzle-team/drizzle-orm/issues/3094
+  casing: 'snake_case',
 });
