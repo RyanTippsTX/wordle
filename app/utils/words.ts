@@ -1,3 +1,4 @@
+const wordsBlob = `
 rossa
 jetty
 wizzo
@@ -14853,3 +14854,11 @@ decal
 fungs
 cadgy
 jalap
+`;
+
+const wordsArray = wordsBlob
+  .split('\n')
+  .map((word) => word.trim())
+  .filter(Boolean);
+
+export const wordSet = new Set(wordsArray);

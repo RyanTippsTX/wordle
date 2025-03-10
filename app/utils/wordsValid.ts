@@ -1,13 +1,15 @@
 // Import the word list as a string
-import words from './words.txt?raw';
+// import words from './words.txt?raw';
 
-const wordArray = words
-  .split('\n')
-  .map((word) => word.trim())
-  .filter(Boolean);
+// const wordsArray = words
+//   .split('\n')
+//   .map((word) => word.trim())
+//   .filter(Boolean);
 
 // Convert the word list to a Set for efficient lookups
-const wordSet = new Set(wordArray);
+// const wordSet = new Set(wordsArray);
+
+import { wordSet } from './words';
 
 /**
  * Checks if a word is valid according to the word list

@@ -1,15 +1,15 @@
 import { createServerFn } from '@tanstack/start';
 import { getCookie, setCookie } from '@tanstack/start/server';
 import { db } from '../db/db';
-import { gamesTable, playsTable, solutionsPoolTable } from '../db/schema';
+import { gamesTable, playsTable } from '../db/schema';
 import { eq, sql } from 'drizzle-orm';
 
-const fallBackGame: typeof gamesTable.$inferSelect = {
-  gameId: 0,
-  date: '1999-12-31',
-  solution: 'house',
-  chosenBy: 'Doris T.',
-};
+// const fallBackGame: typeof gamesTable.$inferSelect = {
+//   gameId: 0,
+//   date: '1999-12-31',
+//   solution: 'house',
+//   chosenBy: 'Doris T.',
+// };
 
 // export const generateNextGame = async () => {
 //   const randomWord = getRandomWord();
@@ -56,7 +56,8 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     console.log('🔥 games', games);
     const todaysGame = games[0];
 
-    return todaysGame || fallBackGame;
+    // return todaysGame || fallBackGame;
+    return todaysGame;
   });
 
 export const trackPlayInstance = createServerFn({ method: 'POST' })
