@@ -53,8 +53,8 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
       // .where(eq(gamesTable.gameId, 11))
       .where(eq(gamesTable.date, today));
 
+    console.log('🔥 games', games);
     const todaysGame = games[0];
-    console.log('🔥 todaysGame', todaysGame);
 
     return todaysGame || fallBackGame;
   });

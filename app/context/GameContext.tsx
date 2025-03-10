@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { isValidWord } from '~/utils/wordsValid';
+// import { isValidWord } from '~/utils/wordsValid';
 import toast from 'react-hot-toast';
 import { Route } from '~/routes/_layout/index';
 import { trackPlayInstance } from '~/utils/game';
@@ -171,6 +171,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       if (e.key === 'Enter') {
         if (currentLetter === 5) {
           // check if word is valid
+          const isValidWord = (arg: any) => true;
           if (isValidWord(stagedGuess.join(''))) {
             setGuesses((prev) => [...prev, stagedGuess]);
             setStagedGuess([]);
