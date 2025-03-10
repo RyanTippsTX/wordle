@@ -8,6 +8,7 @@ package-lock.json
 app.config.timestamp_*.js
 .output
 .vinxi
+.vercel
 /dist
 /build/
 /api/
