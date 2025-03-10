@@ -11,56 +11,79 @@ export function Cover() {
   const { setShowCover, guesses, setShowRules } = useGameContext();
   const [isSharing, setIsSharing] = useState(false);
 
+  // Check if early access is enabled
+  const hasEarlyAccess = useCallback(() => {
+    return localStorage.getItem('early_access') === 'true';
+  }, []);
+
+  // Show alert for non-early access users
+  const handleEarlyAccessCheck = useCallback(
+    (callback: () => void) => {
+      if (hasEarlyAccess()) {
+        callback();
+      } else {
+        alert('Game launching soon - check back in a few days');
+      }
+    },
+    [hasEarlyAccess],
+  );
+
   const handleShare = () => {
-    setIsSharing(true);
+    handleEarlyAccessCheck(() => {
+      setIsSharing(true);
 
-    const shareMessage = `${window.location.href}\nCheck out this Wordle game!`;
+      const shareMessage = `${window.location.href}\nCheck out this Wordle game!`;
 
-    // Use Web Share API on mobile
-    if (navigator.share && isMobile()) {
-      navigator
-        .share({ text: shareMessage })
-        .then(() => {
-          // toast.success('Shared successfully!');
-        })
-        .catch((error) => {
-          // If user cancels share, don't show error
-          if (error.name !== 'AbortError') {
-            toast.error('Failed to share');
-          }
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setIsSharing(false);
-          }, 300);
-        });
-    } else {
-      // Fallback to clipboard for Desktop or if Web Share API is not available
-      navigator.clipboard
-        .writeText(shareMessage)
-        .then(() => {
-          toast.success('Copied to clipboard!', { duration: 2000 });
-        })
-        .catch(() => {
-          toast.error('Failed to copy link');
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setIsSharing(false);
-          }, 300);
-        });
-    }
+      // Use Web Share API on mobile
+      if (navigator.share && isMobile()) {
+        navigator
+          .share({ text: shareMessage })
+          .then(() => {
+            // toast.success('Shared successfully!');
+          })
+          .catch((error) => {
+            // If user cancels share, don't show error
+            if (error.name !== 'AbortError') {
+              toast.error('Failed to share');
+            }
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setIsSharing(false);
+            }, 300);
+          });
+      } else {
+        // Fallback to clipboard for Desktop or if Web Share API is not available
+        navigator.clipboard
+          .writeText(shareMessage)
+          .then(() => {
+            toast.success('Copied to clipboard!', { duration: 2000 });
+          })
+          .catch(() => {
+            toast.error('Failed to copy link');
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setIsSharing(false);
+            }, 300);
+          });
+      }
+    });
   };
 
   const playGame = useCallback(() => {
-    setShowCover(false);
-    if (!guesses.length) setShowRules(true);
-  }, [setShowCover, setShowRules, guesses]);
+    handleEarlyAccessCheck(() => {
+      setShowCover(false);
+      if (!guesses.length) setShowRules(true);
+    });
+  }, [setShowCover, setShowRules, guesses, handleEarlyAccessCheck]);
 
   const showRulesThenPlay = useCallback(() => {
-    setShowCover(false);
-    setShowRules(true);
-  }, [setShowRules, setShowCover]);
+    handleEarlyAccessCheck(() => {
+      setShowCover(false);
+      setShowRules(true);
+    });
+  }, [setShowRules, setShowCover, handleEarlyAccessCheck]);
 
   // Enter key will start game too
   useEffect(() => {
