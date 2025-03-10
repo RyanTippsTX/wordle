@@ -14856,7 +14856,7 @@ cadgy
 jalap
 `;
 
-const wordsArray = wordsBlob
+export const wordsArray = wordsBlob
   .split('\n')
   .map((word) => word.trim())
   .filter(Boolean);

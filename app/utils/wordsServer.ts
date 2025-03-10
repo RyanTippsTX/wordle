@@ -2,12 +2,8 @@
 import { sql } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { solutionsPoolTable } from '~/db/schema';
-import words from './words.txt?raw';
 
-const wordArray = words
-  .split('\n')
-  .map((word) => word.trim())
-  .filter(Boolean);
+import { wordsArray } from './words';
 
 // const wordArray = [
 //   'shake',
@@ -32,7 +28,7 @@ const wordArray = words
  * @returns A random word from the word list
  */
 export function getRandomWord(): string {
-  return wordArray[Math.floor(Math.random() * wordArray.length)];
+  return wordsArray[Math.floor(Math.random() * wordsArray.length)];
 }
 
 export const addWordsToDb = async (words: string[]) => {
