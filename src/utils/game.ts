@@ -26,33 +26,26 @@ import { getCookie, setCookie } from '@tanstack/react-start/server';
 export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
   .handler(async ({ data }) => {
-    return {
-      gameId: 0,
-      date: '1999-12-31',
-      solution: 'house',
-      chosenBy: 'Doris T.',
-    };
+    const playerId = getCookie('playerId');
+    // console.log('🔥 getCookie playerId', playerId);
 
-    // const playerId = getCookie('playerId');
-    // // console.log('🔥 getCookie playerId', playerId);
+    if (!playerId) {
+      // generate a new playerId, no need to save in db. Many will be thrown away before they ever play a game.
+      const uuid = crypto.randomUUID();
+      setCookie('playerId', uuid, {
+        maxAge: 60 * 60 * 24 * 365 * 10, // 10 years
+        sameSite: 'strict', // only sent in same-site requests
+      });
+      // console.log('🔥 setCookie playerId', uuid);
+    }
 
-    // if (!playerId) {
-    //   // generate a new playerId, no need to save in db. Many will be thrown away before they ever play a game.
-    //   const uuid = crypto.randomUUID();
-    //   setCookie('playerId', uuid, {
-    //     maxAge: 60 * 60 * 24 * 365 * 10, // 10 years
-    //     sameSite: 'strict', // only sent in same-site requests
-    //   });
-    //   // console.log('🔥 setCookie playerId', uuid);
-    // }
-
-    // /** YYYY-MM-DD in server's timezone */
-    // const today = new Intl.DateTimeFormat('en-CA', {
-    //   timeZone: 'America/Chicago', // Central Time (CST/CDT)
-    //   year: 'numeric',
-    //   month: '2-digit',
-    //   day: '2-digit',
-    // }).format(new Date());
+    /** YYYY-MM-DD in server's timezone */
+    const today = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Chicago', // Central Time (CST/CDT)
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date());
 
     // const games = await db
     //   .select()
@@ -63,8 +56,15 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     // console.log('🔥 games', games);
     // const todaysGame = games[0];
 
-    // // return todaysGame || fallBackGame;
-    // return todaysGame;
+    const todaysGame = {
+      gameId: 0,
+      date: today,
+      solution: 'house',
+      chosenBy: 'Emily T.',
+    };
+
+    // return todaysGame || fallBackGame;
+    return todaysGame;
   });
 
 // export const trackPlayInstance = createServerFn({ method: 'POST' })
