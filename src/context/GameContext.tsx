@@ -9,7 +9,7 @@ import React, {
 import { isValidWord } from '~/utils/wordsValid';
 import toast from 'react-hot-toast';
 import { Route } from '~/routes/_layout/index';
-// import { trackPlayInstance } from '~/utils/game';
+import { trackPlayInstance } from '~/utils/game';
 interface GameState {
   solution: string;
   chosenBy: string | null;
@@ -38,12 +38,6 @@ const letters = 'abcdefghijklmnopqrstuvwxyz';
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   // constants - might break at midnight
   const todaysGame = Route.useLoaderData();
-  // const todaysGame = {
-  //   gameId: 1,
-  //   date: '2025-03-10',
-  //   solution: 'house',
-  //   chosenBy: 'Doris T.',
-  // };
 
   const solution = todaysGame.solution;
   const chosenBy = todaysGame.chosenBy;
@@ -97,19 +91,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   // trackPlayInstance
   useEffect(() => {
     if (guesses.length > 0) {
-      const data = {
-        gameId: todaysGame.gameId,
-        guessCount: guesses.length,
-        solved: didGuessSolution,
-      };
-      console.log('trackPlayInstance', data);
-      // trackPlayInstance({
-      //   data: {
-      //     gameId: todaysGame.gameId,
-      //     guessCount: guesses.length,
-      //     solved: didGuessSolution,
-      //   },
-      // });
+      trackPlayInstance({
+        data: {
+          gameId: todaysGame.gameId,
+          guessCount: guesses.length,
+          solved: didGuessSolution,
+        },
+      });
     }
   }, [guesses, didGuessSolution, todaysGame.gameId]);
 

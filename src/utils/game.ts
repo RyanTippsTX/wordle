@@ -59,31 +59,31 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     return todaysGame || fallBackGame;
   });
 
-// export const trackPlayInstance = createServerFn({ method: 'POST' })
-//   .validator(
-//     (data: {
-//       //
-//       gameId: number;
-//       guessCount: number;
-//       solved: boolean;
-//     }) => data,
-//   )
-//   .handler(async ({ data }) => {
-//     // console.log('🔥 trackPlayInstance', data);
-//     const playerId = getCookie('playerId');
+export const trackPlayInstance = createServerFn({ method: 'POST' })
+  .validator(
+    (data: {
+      //
+      gameId: number;
+      guessCount: number;
+      solved: boolean;
+    }) => data,
+  )
+  .handler(async ({ data }) => {
+    console.log('🔥 trackPlayInstance', data);
+    const playerId = getCookie('playerId');
 
-//     // TODO: upsert instead of insert
-//     // const play = await db
-//     //   .insert(playsTable)
-//     //   .values({ ...data, playerId })
-//     //   .onConflictDoUpdate({
-//     //     target: [playsTable.playerId, playsTable.gameId],
-//     //     set: {
-//     //       guessCount: data.guessCount,
-//     //       solved: data.solved,
-//     //       lastGuessAt: sql`CURRENT_TIMESTAMP`,
-//     //     },
-//     //   });
-//     // .returning();
-//     // console.log('🔥 play', play);
-//   });
+    // TODO: upsert instead of insert
+    const play = await db
+      .insert(playsTable)
+      .values({ ...data, playerId })
+      .onConflictDoUpdate({
+        target: [playsTable.playerId, playsTable.gameId],
+        set: {
+          guessCount: data.guessCount,
+          solved: data.solved,
+          lastGuessAt: sql`CURRENT_TIMESTAMP`,
+        },
+      });
+    // .returning();
+    console.log('🔥 saved play', play);
+  });
