@@ -1,15 +1,15 @@
 import { createServerFn } from '@tanstack/react-start';
 import { getCookie, setCookie } from '@tanstack/react-start/server';
-// import { db } from '../db/db';
-// import { gamesTable, playsTable } from '../db/schema';
-// import { eq, sql } from 'drizzle-orm';
+import { db } from '../db/db';
+import { gamesTable, playsTable } from '../db/schema';
+import { eq, sql } from 'drizzle-orm';
 
-// const fallBackGame: typeof gamesTable.$inferSelect = {
-//   gameId: 0,
-//   date: '1999-12-31',
-//   solution: 'house',
-//   chosenBy: 'Doris T.',
-// };
+const fallBackGame: typeof gamesTable.$inferSelect = {
+  gameId: 0,
+  date: '1999-12-31',
+  solution: 'broke',
+  chosenBy: 'Broken Robot',
+};
 
 // export const generateNextGame = async () => {
 //   const randomWord = getRandomWord();
@@ -47,24 +47,16 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
       day: '2-digit',
     }).format(new Date());
 
-    // const games = await db
-    //   .select()
-    //   .from(gamesTable)
-    //   // .where(eq(gamesTable.gameId, 11))
-    //   .where(eq(gamesTable.date, today));
+    const games = await db
+      .select()
+      .from(gamesTable)
+      // .where(eq(gamesTable.gameId, 11))
+      .where(eq(gamesTable.date, today));
 
-    // console.log('🔥 games', games);
-    // const todaysGame = games[0];
+    console.log('🔥 games', games);
+    const todaysGame = games[0];
 
-    const todaysGame = {
-      gameId: 0,
-      date: today,
-      solution: 'house',
-      chosenBy: 'Emily T.',
-    };
-
-    // return todaysGame || fallBackGame;
-    return todaysGame;
+    return todaysGame || fallBackGame;
   });
 
 // export const trackPlayInstance = createServerFn({ method: 'POST' })

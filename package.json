@@ -10,9 +10,11 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "@tanstack/react-router": "^1.114.13",
     "@tanstack/react-router-devtools": "^1.114.13",
     "@tanstack/react-start": "^1.114.13",
+    "drizzle-orm": "^0.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
@@ -24,6 +26,7 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.30.5",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
