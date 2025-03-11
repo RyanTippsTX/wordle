@@ -17,15 +17,8 @@ export const Route = createFileRoute('/_layout/')({
 
 function Home() {
   // const router = useRouter();
-  // const todaysGame = Route.useLoaderData();
-  // console.log('🔥 ', todaysGame);
-
-  const todaysGame = {
-    gameId: 1,
-    date: '2025-03-10',
-    solution: 'house',
-    chosenBy: 'Doris T.',
-  };
+  const todaysGame = Route.useLoaderData();
+  console.log('🔥 ', todaysGame);
 
   const {
     showCover,
