@@ -26,38 +26,45 @@ import { eq, sql } from 'drizzle-orm';
 export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
   .handler(async ({ data }) => {
-    const playerId = getCookie('playerId');
-    // console.log('🔥 getCookie playerId', playerId);
+    return {
+      gameId: 0,
+      date: '1999-12-31',
+      solution: 'house',
+      chosenBy: 'Doris T.',
+    };
 
-    if (!playerId) {
-      // generate a new playerId, no need to save in db. Many will be thrown away before they ever play a game.
-      const uuid = crypto.randomUUID();
-      setCookie('playerId', uuid, {
-        maxAge: 60 * 60 * 24 * 365 * 10, // 10 years
-        sameSite: 'strict', // only sent in same-site requests
-      });
-      // console.log('🔥 setCookie playerId', uuid);
-    }
+    // const playerId = getCookie('playerId');
+    // // console.log('🔥 getCookie playerId', playerId);
 
-    /** YYYY-MM-DD in server's timezone */
-    const today = new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'America/Chicago', // Central Time (CST/CDT)
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }).format(new Date());
+    // if (!playerId) {
+    //   // generate a new playerId, no need to save in db. Many will be thrown away before they ever play a game.
+    //   const uuid = crypto.randomUUID();
+    //   setCookie('playerId', uuid, {
+    //     maxAge: 60 * 60 * 24 * 365 * 10, // 10 years
+    //     sameSite: 'strict', // only sent in same-site requests
+    //   });
+    //   // console.log('🔥 setCookie playerId', uuid);
+    // }
 
-    const games = await db
-      .select()
-      .from(gamesTable)
-      // .where(eq(gamesTable.gameId, 11))
-      .where(eq(gamesTable.date, today));
+    // /** YYYY-MM-DD in server's timezone */
+    // const today = new Intl.DateTimeFormat('en-CA', {
+    //   timeZone: 'America/Chicago', // Central Time (CST/CDT)
+    //   year: 'numeric',
+    //   month: '2-digit',
+    //   day: '2-digit',
+    // }).format(new Date());
 
-    console.log('🔥 games', games);
-    const todaysGame = games[0];
+    // const games = await db
+    //   .select()
+    //   .from(gamesTable)
+    //   // .where(eq(gamesTable.gameId, 11))
+    //   .where(eq(gamesTable.date, today));
 
-    // return todaysGame || fallBackGame;
-    return todaysGame;
+    // console.log('🔥 games', games);
+    // const todaysGame = games[0];
+
+    // // return todaysGame || fallBackGame;
+    // return todaysGame;
   });
 
 export const trackPlayInstance = createServerFn({ method: 'POST' })
@@ -74,17 +81,17 @@ export const trackPlayInstance = createServerFn({ method: 'POST' })
     const playerId = getCookie('playerId');
 
     // TODO: upsert instead of insert
-    const play = await db
-      .insert(playsTable)
-      .values({ ...data, playerId })
-      .onConflictDoUpdate({
-        target: [playsTable.playerId, playsTable.gameId],
-        set: {
-          guessCount: data.guessCount,
-          solved: data.solved,
-          lastGuessAt: sql`CURRENT_TIMESTAMP`,
-        },
-      });
+    // const play = await db
+    //   .insert(playsTable)
+    //   .values({ ...data, playerId })
+    //   .onConflictDoUpdate({
+    //     target: [playsTable.playerId, playsTable.gameId],
+    //     set: {
+    //       guessCount: data.guessCount,
+    //       solved: data.solved,
+    //       lastGuessAt: sql`CURRENT_TIMESTAMP`,
+    //     },
+    //   });
     // .returning();
     // console.log('🔥 play', play);
   });
