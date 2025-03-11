@@ -1,15 +1,13 @@
-// copied from https://tanstack.com/router/latest/docs/framework/react/examples/start-basic
-
 // export const seo = ({
 //   title,
 //   description,
 //   keywords,
 //   image,
 // }: {
-//   title: string;
-//   description?: string;
-//   image?: string;
-//   keywords?: string;
+//   title: string
+//   description?: string
+//   image?: string
+//   keywords?: string
 // }) => {
 //   const tags = [
 //     { title },
@@ -29,7 +27,7 @@
 //           { name: 'og:image', content: image },
 //         ]
 //       : []),
-//   ];
+//   ]
 
-//   return tags;
-// };
+//   return tags
+// }

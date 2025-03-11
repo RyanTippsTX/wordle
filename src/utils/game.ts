@@ -1,8 +1,8 @@
-import { createServerFn } from '@tanstack/start';
-import { getCookie, setCookie } from '@tanstack/start/server';
-import { db } from '../db/db';
-import { gamesTable, playsTable } from '../db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { createServerFn } from '@tanstack/react-start';
+import { getCookie, setCookie } from '@tanstack/react-start/server';
+// import { db } from '../db/db';
+// import { gamesTable, playsTable } from '../db/schema';
+// import { eq, sql } from 'drizzle-orm';
 
 // const fallBackGame: typeof gamesTable.$inferSelect = {
 //   gameId: 0,
@@ -67,31 +67,31 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     // return todaysGame;
   });
 
-export const trackPlayInstance = createServerFn({ method: 'POST' })
-  .validator(
-    (data: {
-      //
-      gameId: number;
-      guessCount: number;
-      solved: boolean;
-    }) => data,
-  )
-  .handler(async ({ data }) => {
-    // console.log('🔥 trackPlayInstance', data);
-    const playerId = getCookie('playerId');
+// export const trackPlayInstance = createServerFn({ method: 'POST' })
+//   .validator(
+//     (data: {
+//       //
+//       gameId: number;
+//       guessCount: number;
+//       solved: boolean;
+//     }) => data,
+//   )
+//   .handler(async ({ data }) => {
+//     // console.log('🔥 trackPlayInstance', data);
+//     const playerId = getCookie('playerId');
 
-    // TODO: upsert instead of insert
-    // const play = await db
-    //   .insert(playsTable)
-    //   .values({ ...data, playerId })
-    //   .onConflictDoUpdate({
-    //     target: [playsTable.playerId, playsTable.gameId],
-    //     set: {
-    //       guessCount: data.guessCount,
-    //       solved: data.solved,
-    //       lastGuessAt: sql`CURRENT_TIMESTAMP`,
-    //     },
-    //   });
-    // .returning();
-    // console.log('🔥 play', play);
-  });
+//     // TODO: upsert instead of insert
+//     // const play = await db
+//     //   .insert(playsTable)
+//     //   .values({ ...data, playerId })
+//     //   .onConflictDoUpdate({
+//     //     target: [playsTable.playerId, playsTable.gameId],
+//     //     set: {
+//     //       guessCount: data.guessCount,
+//     //       solved: data.solved,
+//     //       lastGuessAt: sql`CURRENT_TIMESTAMP`,
+//     //     },
+//     //   });
+//     // .returning();
+//     // console.log('🔥 play', play);
+//   });

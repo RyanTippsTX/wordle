@@ -6,7 +6,7 @@ import { End } from '~/components/end';
 import { Keyboard } from '~/components/keyboard';
 import { Rules } from '~/components/rules';
 import { useGameContext } from '~/context/GameContext';
-import { HelpCircle } from 'lucide-react';
+// import { HelpCircle } from 'lucide-react';
 import { getTodaysGame } from '~/utils/game';
 
 // defines the page content at the given route
@@ -92,7 +92,10 @@ const Nav = () => {
           className="p-2 text-gray-300 hover:text-white hover:bg-neutral-800 rounded-full transition-colors"
           aria-label="Help"
         >
-          <HelpCircle size={20} />
+          {/* <HelpCircle size={20} /> */}
+          <div className="text-2xl bg-yellow-500 text-black rounded-full w-6 h-6 flex items-center justify-center">
+            ?
+          </div>
         </button>
       </div>
     </nav>

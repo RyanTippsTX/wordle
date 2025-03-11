@@ -1,7 +1,7 @@
-// Import the word list as a string
-import { sql } from 'drizzle-orm';
-import { db } from '~/db/db';
-import { solutionsPoolTable } from '~/db/schema';
+// // Import the word list as a string
+// import { sql } from 'drizzle-orm';
+// import { db } from '~/db/db';
+// import { solutionsPoolTable } from '~/db/schema';
 
 import { wordsArray } from './words';
 

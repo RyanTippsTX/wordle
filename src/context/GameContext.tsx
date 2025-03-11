@@ -9,7 +9,7 @@ import React, {
 // import { isValidWord } from '~/utils/wordsValid';
 import toast from 'react-hot-toast';
 import { Route } from '~/routes/_layout/index';
-import { trackPlayInstance } from '~/utils/game';
+// import { trackPlayInstance } from '~/utils/game';
 interface GameState {
   solution: string;
   chosenBy: string | null;
@@ -97,13 +97,19 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   // trackPlayInstance
   useEffect(() => {
     if (guesses.length > 0) {
-      trackPlayInstance({
-        data: {
-          gameId: todaysGame.gameId,
-          guessCount: guesses.length,
-          solved: didGuessSolution,
-        },
-      });
+      const data = {
+        gameId: todaysGame.gameId,
+        guessCount: guesses.length,
+        solved: didGuessSolution,
+      };
+      console.log('trackPlayInstance', data);
+      // trackPlayInstance({
+      //   data: {
+      //     gameId: todaysGame.gameId,
+      //     guessCount: guesses.length,
+      //     solved: didGuessSolution,
+      //   },
+      // });
     }
   }, [guesses, didGuessSolution, todaysGame.gameId]);
 

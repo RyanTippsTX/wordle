@@ -1,5 +1,8 @@
 // app/routes/__root.tsx
-import { Outlet, createRootRoute, HeadContent, Scripts } from '@tanstack/react-router';
+import { Outlet, HeadContent, Scripts, Link, createRootRoute } from '@tanstack/react-router';
+// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary';
+import { NotFound } from '~/components/NotFound';
 import appCss from '~/styles/app.css?url';
 import type { ReactNode } from 'react';
 
@@ -20,7 +23,7 @@ export const Route = createRootRoute({
         charSet: 'utf-8',
       },
       {
-        title: 'Tippsle — A  5 Letter Word Game',
+        title: 'Tippsle — A 5 Letter Word Game',
         //              ^this is an Em dash
       },
       {
@@ -47,7 +50,6 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: appCss,
       },
-
       {
         rel: 'icon',
         type: 'image/svg+xml',
@@ -55,6 +57,14 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  errorComponent: (props) => {
+    return (
+      <RootDocument>
+        <DefaultCatchBoundary {...props} />
+      </RootDocument>
+    );
+  },
+  notFoundComponent: () => <NotFound />,
   component: RootComponent,
 });
 
@@ -65,7 +75,6 @@ function RootComponent() {
     </RootDocument>
   );
 }
-
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html>
@@ -74,6 +83,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         {children}
+        {/* <TanStackRouterDevtools position="bottom-right" /> */}
         <Scripts />
       </body>
     </html>

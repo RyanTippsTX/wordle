@@ -1,10 +1,18 @@
+# Dependencies
 node_modules
 package-lock.json
+yarn.lock
+
+# Environment variables
 .env
 
+# OS files
 .DS_Store
 
-# build artifacts
+# Cache
+.cache
+
+# Build artifacts
 app.config.timestamp_*.js
 .output
 .vinxi

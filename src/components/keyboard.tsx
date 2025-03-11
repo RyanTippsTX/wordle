@@ -1,7 +1,12 @@
 import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
-import { Delete } from 'lucide-react';
+// import { Delete } from 'lucide-react';
+
 import { useState, useEffect } from 'react';
+
+const Delete = () => {
+  return <div>DEL</div>;
+};
 
 export function Keyboard() {
   return (

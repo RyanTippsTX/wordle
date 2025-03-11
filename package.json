@@ -1,6 +1,7 @@
 {
   "name": "wordle",
   "private": true,
+  "sideEffects": false,
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
@@ -9,34 +10,22 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
-    "@tanstack/react-router": "^1.106.0",
-    "@tanstack/start": "^1.107.0",
-    "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.40.0",
-    "lucide-react": "^0.475.0",
+    "@tanstack/react-router": "^1.114.13",
+    "@tanstack/react-router-devtools": "^1.114.13",
+    "@tanstack/react-start": "^1.114.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
     "tailwind-merge": "^2.6.0",
-    "vinxi": "^0.5.3"
+    "vinxi": "0.5.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/react": "^19.0.2",
-    "@types/react-dom": "^19.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.25.0",
-    "@typescript-eslint/parser": "^8.25.0",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@types/node": "^22.5.4",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
-    "drizzle-kit": "^0.30.5",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "globals": "^16.0.0",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
-    "tsx": "^4.19.3",
     "typescript": "^5.7.2",
     "vite-tsconfig-paths": "^5.1.4"
   }

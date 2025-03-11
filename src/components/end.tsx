@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { WordleIcon } from './wordle-icon';
 import { twMerge } from 'tailwind-merge';
-import { X } from 'lucide-react';
+// import { X } from 'lucide-react';
 import { useGameContext } from '~/context/GameContext';
 import toast from 'react-hot-toast';
 import { isMobile, useShareMessage } from '~/utils/useShareMessage';
@@ -43,7 +43,7 @@ export function End() {
             setIsSharing(false);
           }, 300);
         });
-    } else {
+    } else if (navigator.clipboard) {
       // Fallback to clipboard for Desktop or if Web Share API is not available
       navigator.clipboard
         .writeText(shareMessage)
@@ -58,6 +58,9 @@ export function End() {
             setIsSharing(false);
           }, 300);
         });
+    } else {
+      toast.error('Failed to share');
+      setIsSharing(false);
     }
   }, [isSpinning, isSharing, handleSpin, shareMessage]);
 
@@ -85,7 +88,10 @@ export function End() {
   return (
     <div className="absolute inset-0 text-gray-100 flex flex-col items-center justify-center bg-neutral-900 z-40">
       <div className="absolute top-3 right-3 p-3 cursor-pointer" onClick={handleClose}>
-        <X />
+        {/* <X /> */}
+        <div className="text-2xl bg-yellow-500 text-black rounded-full w-6 h-6 flex items-center justify-center">
+          X
+        </div>
       </div>
       <div
         className={twMerge(

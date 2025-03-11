@@ -1,7 +1,11 @@
 import { useGameContext } from '~/context/GameContext';
-import { X } from 'lucide-react';
+// import { X } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import { useCallback, useEffect, useState } from 'react';
+
+const X = () => {
+  return <div>X</div>;
+};
 
 export function Rules() {
   const { setShowRules } = useGameContext();
