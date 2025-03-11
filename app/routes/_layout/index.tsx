@@ -5,7 +5,7 @@ import { Cover } from '~/components/cover';
 import { End } from '~/components/end';
 import { Keyboard } from '~/components/keyboard';
 import { Rules } from '~/components/rules';
-import { GameProvider, useGameContext } from '~/context/GameContext';
+import { useGameContext } from '~/context/GameContext';
 import { HelpCircle } from 'lucide-react';
 import { getTodaysGame } from '~/utils/game';
 

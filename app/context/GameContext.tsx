@@ -37,7 +37,14 @@ const letters = 'abcdefghijklmnopqrstuvwxyz';
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   // constants - might break at midnight
-  const todaysGame = Route.useLoaderData();
+  // const todaysGame = Route.useLoaderData();
+  const todaysGame = {
+    gameId: 1,
+    date: '2025-03-10',
+    solution: 'house',
+    chosenBy: 'Doris T.',
+  };
+
   const solution = todaysGame.solution;
   const chosenBy = todaysGame.chosenBy;
 
