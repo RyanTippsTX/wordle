@@ -18,3 +18,15 @@ export function formatDate(dateString: string) {
     timeZone: 'UTC', // Ensures no time zone influence
   }).format(date);
 }
+
+export function getTodaysDate() {
+  /** YYYY-MM-DD in server's timezone */
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Chicago', // Central Time (CST/CDT)
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
+
+  return today;
+}
