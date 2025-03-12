@@ -35,7 +35,7 @@ const getTodaysWinner = async () => {
   return todaysWinner;
 };
 
-const checkTomorrowNeedsWord = async () => {
+const checkTomorrowsWordChosen = async () => {
   const tomorrow = getTomorrowsDate();
   const games = await db //
     .select()
@@ -44,7 +44,7 @@ const checkTomorrowNeedsWord = async () => {
 
   // cron generated games will NOT have a chosenBy
   const isChosen = !!games[0]?.chosenBy;
-  return !isChosen;
+  return isChosen;
 };
 
 // export const generateNextGame = async () => {
@@ -67,8 +67,11 @@ export const checkEligibleForChooseTomorrowsGame = createServerFn({ method: 'GET
     if (!playerId) return false;
 
     const isWinner = playerId === (await getTodaysWinner());
-    const tomorrowNeedsWord = await checkTomorrowNeedsWord();
-    return isWinner && tomorrowNeedsWord;
+    const tomorrowsWordChosen = await checkTomorrowsWordChosen();
+    return {
+      isWinner,
+      tomorrowsWordChosen,
+    };
   });
 
 // export const chooseTomorrowsGame = createServerFn({ method: 'POST' })
