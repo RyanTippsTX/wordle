@@ -1,3 +1,5 @@
+// config for drizzle-kit only, not used in the app
+import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
