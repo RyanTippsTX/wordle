@@ -16,74 +16,60 @@ export function Cover() {
     return localStorage.getItem('early_access') === 'true';
   }, []);
 
-  // Show alert for non-early access users
-  const handleEarlyAccessCheck = useCallback(
-    (callback: () => void) => {
-      if (hasEarlyAccess()) {
-        callback();
-      } else {
-        alert('Game launching soon - check back in a few days');
-      }
-    },
-    [hasEarlyAccess],
-  );
-
   const handleShare = () => {
-    handleEarlyAccessCheck(() => {
-      setIsSharing(true);
+    if (!hasEarlyAccess()) return;
 
-      const shareMessage = `${window.location.href}\nCheck out this Wordle game!`;
+    setIsSharing(true);
 
-      // Use Web Share API on mobile
-      if (navigator.share && isMobile()) {
-        navigator
-          .share({ text: shareMessage })
-          .then(() => {
-            // toast.success('Shared successfully!');
-          })
-          .catch((error) => {
-            // If user cancels share, don't show error
-            if (error.name !== 'AbortError') {
-              toast.error('Failed to share');
-            }
-          })
-          .finally(() => {
-            setTimeout(() => {
-              setIsSharing(false);
-            }, 300);
-          });
-      } else {
-        // Fallback to clipboard for Desktop or if Web Share API is not available
-        navigator.clipboard
-          .writeText(shareMessage)
-          .then(() => {
-            toast.success('Copied to clipboard!', { duration: 2000 });
-          })
-          .catch(() => {
-            toast.error('Failed to copy link');
-          })
-          .finally(() => {
-            setTimeout(() => {
-              setIsSharing(false);
-            }, 300);
-          });
-      }
-    });
+    const shareMessage = `${window.location.href}\nCheck out this Wordle game!`;
+
+    // Use Web Share API on mobile
+    if (navigator.share && isMobile()) {
+      navigator
+        .share({ text: shareMessage })
+        .then(() => {
+          // toast.success('Shared successfully!');
+        })
+        .catch((error) => {
+          // If user cancels share, don't show error
+          if (error.name !== 'AbortError') {
+            toast.error('Failed to share');
+          }
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsSharing(false);
+          }, 300);
+        });
+    } else {
+      // Fallback to clipboard for Desktop or if Web Share API is not available
+      navigator.clipboard
+        .writeText(shareMessage)
+        .then(() => {
+          toast.success('Copied to clipboard!', { duration: 2000 });
+        })
+        .catch(() => {
+          toast.error('Failed to copy link');
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsSharing(false);
+          }, 300);
+        });
+    }
   };
 
   const playGame = useCallback(() => {
-    handleEarlyAccessCheck(() => {
-      setShowCover(false);
-      if (!guesses.length) setShowRules(true);
-    });
-  }, [setShowCover, setShowRules, guesses, handleEarlyAccessCheck]);
+    if (!hasEarlyAccess()) return;
+    setShowCover(false);
+    if (!guesses.length) setShowRules(true);
+  }, [setShowCover, setShowRules, guesses]);
 
   const showRulesThenPlay = useCallback(() => {
-    handleEarlyAccessCheck(() => {
-      setShowCover(false);
-      setShowRules(true);
-    });
-  }, [setShowRules, setShowCover, handleEarlyAccessCheck]);
+    if (!hasEarlyAccess()) return;
+    setShowCover(false);
+    setShowRules(true);
+  }, [setShowRules, setShowCover]);
 
   // Enter key will start game too
   useEffect(() => {
