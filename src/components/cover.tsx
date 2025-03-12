@@ -66,13 +66,13 @@ export function Cover() {
     if (!hasEarlyAccess()) return;
     setShowCover(false);
     if (!guesses.length) setShowRules(true);
-  }, [setShowCover, setShowRules, guesses]);
+  }, [setShowCover, setShowRules, guesses, hasEarlyAccess]);
 
   const showRulesThenPlay = useCallback(() => {
     if (!hasEarlyAccess()) return;
     setShowCover(false);
     setShowRules(true);
-  }, [setShowRules, setShowCover]);
+  }, [setShowRules, setShowCover, hasEarlyAccess]);
 
   // Enter key will start game too
   useEffect(() => {
