@@ -30,3 +30,15 @@ export function getTodaysDate() {
 
   return today;
 }
+
+export function getTomorrowsDate() {
+  /** YYYY-MM-DD in server's timezone */
+  const tomorrow = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Chicago', // Central Time (CST/CDT)
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date(Date.now() + 24 * 60 * 60 * 1000));
+
+  return tomorrow;
+}

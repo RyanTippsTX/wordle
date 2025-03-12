@@ -3,7 +3,7 @@ import { getCookie, setCookie } from '@tanstack/react-start/server';
 import { db } from '../db/db';
 import { gamesTable, guessesTable } from '../db/schema';
 import { and, asc, eq, lte, sql } from 'drizzle-orm';
-import { getTodaysDate } from './dates';
+import { getTodaysDate, getTomorrowsDate } from './dates';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
   gameId: 0,
@@ -35,6 +35,18 @@ const getTodaysWinner = async () => {
   return todaysWinner;
 };
 
+const checkTomorrowNeedsWord = async () => {
+  const tomorrow = getTomorrowsDate();
+  const games = await db //
+    .select()
+    .from(gamesTable)
+    .where(eq(gamesTable.date, tomorrow));
+
+  // cron generated games will NOT have a chosenBy
+  const isChosen = !!games[0]?.chosenBy;
+  return !isChosen;
+};
+
 // export const generateNextGame = async () => {
 //   const randomWord = getRandomWord();
 //   const word = await db.insert(solutionsPoolTable).values({
@@ -55,7 +67,8 @@ export const checkEligibleForChooseTomorrowsGame = createServerFn({ method: 'GET
     if (!playerId) return false;
 
     const isWinner = playerId === (await getTodaysWinner());
-    return isWinner;
+    const tomorrowNeedsWord = await checkTomorrowNeedsWord();
+    return isWinner && tomorrowNeedsWord;
   });
 
 // export const chooseTomorrowsGame = createServerFn({ method: 'POST' })
