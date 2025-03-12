@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_layout/')({
 function Home() {
   // const router = useRouter();
   const todaysGame = Route.useLoaderData();
-  console.log('🔥 ', todaysGame);
+  // console.log('🔥 ', todaysGame);
 
   const {
     showCover,

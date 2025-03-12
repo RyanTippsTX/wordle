@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import { getCookie, setCookie } from '@tanstack/react-start/server';
 import { db } from '../db/db';
-import { gamesTable, playsTable } from '../db/schema';
+import { gamesTable, guessesTable } from '../db/schema';
 import { and, asc, eq, lte, sql } from 'drizzle-orm';
 import { getTodaysDate } from './dates';
 
@@ -49,37 +49,33 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
       // .where(eq(gamesTable.gameId, 11))
       .where(eq(gamesTable.date, today));
 
-    console.log('🔥 games', games);
+    // console.log('🔥 games', games);
     const todaysGame = games[0];
 
     return todaysGame || fallBackGame;
   });
 
-export const trackPlayInstance = createServerFn({ method: 'POST' })
+export const trackGuess = createServerFn({ method: 'POST' })
   .validator(
     (data: {
       //
       gameId: number;
-      guessCount: number;
-      solved: boolean;
+      guessNumber: number;
+      word: string;
     }) => data,
   )
   .handler(async ({ data }) => {
-    console.log('🔥 trackPlayInstance', data);
+    console.log('🔥 trackGuess', data);
     const playerId = getCookie('playerId');
 
     // TODO: upsert instead of insert
-    const play = await db
-      .insert(playsTable)
-      .values({ ...data, playerId })
-      .onConflictDoUpdate({
-        target: [playsTable.playerId, playsTable.gameId],
-        set: {
-          guessCount: data.guessCount,
-          solved: data.solved,
-          lastGuessAt: sql`CURRENT_TIMESTAMP`,
-        },
-      });
+    await db
+      .insert(guessesTable)
+      .values({
+        ...data,
+        playerId,
+      })
+      .onConflictDoNothing();
     // .returning();
-    console.log('🔥 saved play', play);
+    // console.log('🔥 saved guess', guess);
   });
