@@ -8,7 +8,16 @@ import globals from 'globals';
 export default [
   eslint.configs.recommended,
   {
-    ignores: ['node_modules/**', 'dist/**', 'build/**', '.git/**', '*.log'],
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'build/**',
+      '.git/**',
+      '*.log',
+      '.output/**',
+      '.vercel/**',
+      '.vinxi/**',
+    ],
   },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -45,7 +54,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': ['off', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['off'],
 
       // Override core ESLint rules
       'no-unused-vars': 'off', // Changed from error to warning
