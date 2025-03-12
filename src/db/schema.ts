@@ -5,10 +5,9 @@ import {
   text,
   timestamp,
   uuid,
-  boolean,
   serial,
   varchar,
-  unique,
+  primaryKey,
 } from 'drizzle-orm/pg-core';
 
 // represents each day's game definition
@@ -19,24 +18,22 @@ export const gamesTable = pgTable('games', {
   chosenBy: text(),
 });
 
-// represents each play of the game
-export const playsTable = pgTable(
-  'plays',
+export const guessesTable = pgTable(
+  'guesses',
   {
-    playId: uuid().primaryKey().defaultRandom(),
-    playerId: uuid(), // might be null if cookies blocked
+    // playId: uuid().defaultRandom(), // not needed, infer from composite on gameId & playerId
     gameId: integer()
       .notNull()
       .references(() => gamesTable.gameId), // which day/game
-    guessCount: integer().notNull(), // not counted until they make initial guess
-    solved: boolean().notNull().default(false),
-    // startedAt: timestamp().notNull().defaultNow(), // consider adding in future
-    firstGuessAt: timestamp().notNull().defaultNow(),
-    lastGuessAt: timestamp().notNull().defaultNow(),
+    playerId: uuid(), // might be null if cookies blocked
+    guessNumber: integer().notNull(),
+    word: varchar({ length: 5 }).notNull(),
+    // solved: boolean().notNull().default(false), // not needed, infer from join with games table
+    guessedAt: timestamp().notNull().defaultNow(),
   },
   (table) => [
-    // each player can only play a game once
-    unique().on(table.playerId, table.gameId),
+    // 6 guesses per player per day
+    primaryKey({ columns: [table.gameId, table.playerId, table.guessNumber] }),
   ],
 );
 
