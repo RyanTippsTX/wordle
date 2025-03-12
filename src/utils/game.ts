@@ -126,6 +126,16 @@ export const trackGuess = createServerFn({ method: 'POST' })
     console.log('🔥 trackGuess', data);
     const playerId = getCookie('playerId');
 
+    // dont track guesses for stale games
+    const todaysGame = await getTodaysGame();
+    if (todaysGame.gameId !== data.gameId) {
+      console.error(
+        'User playing stale game - guesses will not be tracked',
+        todaysGame.gameId,
+        data.gameId,
+      );
+      return;
+    }
     // TODO: upsert instead of insert
     await db
       .insert(guessesTable)
