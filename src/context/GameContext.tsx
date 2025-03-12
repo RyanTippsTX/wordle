@@ -9,7 +9,9 @@ import React, {
 import { isValidWord } from '~/utils/wordsValid';
 import toast from 'react-hot-toast';
 import { getRouteApi } from '@tanstack/react-router';
-import { trackGuess } from '~/utils/game';
+import { checkEligibleForChooseTomorrowsGame, chooseTomorrowsGame, trackGuess } from '~/utils/game';
+import { useQuery, useMutation, UseQueryResult } from '@tanstack/react-query';
+
 interface GameState {
   solution: string;
   chosenBy: string | null;
@@ -29,6 +31,7 @@ interface GameState {
   handleKeyPress: (e: KeyboardEvent) => void;
   isShaking: boolean;
   isTouchDevice: boolean;
+  promptForTomorrowsWord: UseQueryResult<boolean, Error>;
 }
 
 const GameContext = createContext<GameState | undefined>(undefined);
@@ -59,6 +62,21 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const guessedLetters = new Set(guesses.flat());
   const didGuessSolution = !!guesses.length && guesses[guesses.length - 1].join('') === solution;
   const gameOver = didGuessSolution || guesses.length === 6;
+
+  // choose tomorrow's word
+  const promptForTomorrowsWord = useQuery({
+    queryKey: ['shouldPromptUserToChooseTomorrowsWord'],
+    queryFn: async () => {
+      if (!didGuessSolution) return false;
+      const { isWinner, tomorrowsWordChosen } = await checkEligibleForChooseTomorrowsGame();
+      const shouldPromptUser = isWinner && !tomorrowsWordChosen;
+      return shouldPromptUser;
+    },
+  });
+
+  // const submitTomorrowsWord = useMutation({
+  //   mutationFn: chooseTomorrowsGame,
+  // });
 
   // misc helpers
   const [isShaking, setIsShaking] = useState(false);
@@ -224,6 +242,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         handleKeyPress,
         isShaking,
         isTouchDevice,
+        promptForTomorrowsWord,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { isMobile, useShareMessage } from '~/utils/useShareMessage';
 
 export function End() {
-  const { setShowEnd, guesses } = useGameContext();
+  const { setShowEnd, guesses, promptForTomorrowsWord } = useGameContext();
   const [isSpinning, setIsSpinning] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
 
@@ -102,16 +102,52 @@ export function End() {
         <WordleIcon />
       </div>
 
-      <div className="text-4xl font-extrabold mb-3 text-center">Thanks for playing today!</div>
-      <div className="text-2xl font-light text-center mb-8">See you tomorrow?</div>
+      {/* {promptForTomorrowsWord.isSuccess && promptForTomorrowsWord.data ? ( */}
+      {/* eslint-disable-next-line no-constant-condition */}
+      {true ? (
+        // Prompt for tomorrow's word
+        <>
+          <div className="text-4xl font-extrabold mb-3 text-center">You're the first winner!!</div>
+          <div className="text-2xl font-light text-center mb-8">Choose tomorrow's word?</div>
 
-      <button
-        className="w-40 h-12 py-2 px-4 bg-gray-100 text-black rounded-full border border-black"
-        onClick={handleShare}
-        disabled={isSpinning}
-      >
-        Share
-      </button>
+          <form
+            className="flex flex-col items-center"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target as HTMLFormElement);
+              const word = formData.get('word') as string;
+              console.log('🔥 word', word);
+            }}
+          >
+            <input
+              type="text"
+              name="word"
+              placeholder="Enter your word"
+              className="block w-40 h-12 py-2 px-4 bg-gray-100 text-black rounded-full border border-black"
+            />
+            <button
+              type="submit"
+              className="block w-40 h-12 py-2 px-4 bg-gray-100 text-black rounded-full border border-black"
+              // disabled={isSpinning}
+            >
+              Pick word
+            </button>
+          </form>
+        </>
+      ) : (
+        // Thanks / Share
+        <>
+          <div className="text-4xl font-extrabold mb-3 text-center">Thanks for playing today!</div>
+          <div className="text-2xl font-light text-center mb-8">See you tomorrow?</div>
+          <button
+            className="w-40 h-12 py-2 px-4 bg-gray-100 text-black rounded-full border border-black"
+            onClick={handleShare}
+            disabled={isSpinning}
+          >
+            Share
+          </button>
+        </>
+      )}
     </div>
   );
 }

@@ -60,13 +60,13 @@ const checkTomorrowsWordChosen = async () => {
 };
 
 export const checkEligibleForChooseTomorrowsGame = createServerFn({ method: 'GET' })
-  .validator((data: { word: string }) => data)
-  .handler(async ({ data }) => {
+  // .validator((data: {}) => data)
+  .handler(async () => {
     const playerId = getCookie('playerId');
 
-    if (!playerId) return false;
+    // if (!playerId) return false;
 
-    const isWinner = playerId === (await getTodaysWinner());
+    const isWinner = !!playerId && playerId === (await getTodaysWinner());
     const tomorrowsWordChosen = await checkTomorrowsWordChosen();
     return {
       isWinner,
@@ -74,16 +74,19 @@ export const checkEligibleForChooseTomorrowsGame = createServerFn({ method: 'GET
     };
   });
 
-// export const chooseTomorrowsGame = createServerFn({ method: 'POST' })
-//   .validator((data: { word: string }) => data)
-//   .handler(async ({ data }) => {
-//     const playerId = getCookie('playerId');
-//     const game = await db.insert(gamesTable).values({
-//       date: new Date().toISOString(),
-//       solution: data.word,
-//     });
-//     return game;
-//   });
+export const chooseTomorrowsGame = createServerFn({ method: 'POST' })
+  .validator((data: { word: string }) => data)
+  .handler(async ({ data }) => {
+    const playerId = getCookie('playerId');
+
+    console.log('🔥 word', data.word);
+
+    // const game = await db.insert(gamesTable).values({
+    //   date: new Date().toISOString(),
+    //   solution: data.word,
+    // });
+    // return game;
+  });
 
 export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
@@ -126,7 +129,7 @@ export const trackGuess = createServerFn({ method: 'POST' })
     }) => data,
   )
   .handler(async ({ data }) => {
-    console.log('🔥 trackGuess', data);
+    // console.log('🔥 trackGuess', data);
     const playerId = getCookie('playerId');
 
     // dont track guesses for stale games
