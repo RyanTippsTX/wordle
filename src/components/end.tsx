@@ -5,9 +5,10 @@ import { twMerge } from 'tailwind-merge';
 import { useGameContext } from '~/context/GameContext';
 import toast from 'react-hot-toast';
 import { isMobile, useShareMessage } from '~/utils/useShareMessage';
+import { isValidWord } from '~/utils/wordsValid';
 
 export function End() {
-  const { setShowEnd, guesses, promptForTomorrowsWord } = useGameContext();
+  const { setShowEnd, guesses, promptForTomorrowsWord, solution } = useGameContext();
   const [isSpinning, setIsSpinning] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
 
@@ -115,7 +116,24 @@ export function End() {
             onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.target as HTMLFormElement);
-              const word = formData.get('word') as string;
+              const rawWord = formData.get('word') as string;
+
+              const word = rawWord.toLowerCase().trim();
+              if (word.length !== 5) {
+                toast.error('Must be 5 letter word');
+                return;
+              }
+
+              if (word === solution) {
+                toast.error("Cannot choose today's word");
+                return;
+              }
+
+              if (!isValidWord(word)) {
+                toast.error('Must be a legit word');
+                return;
+              }
+
               console.log('🔥 word', word);
             }}
           >
