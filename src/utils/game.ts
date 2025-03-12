@@ -2,7 +2,8 @@ import { createServerFn } from '@tanstack/react-start';
 import { getCookie, setCookie } from '@tanstack/react-start/server';
 import { db } from '../db/db';
 import { gamesTable, playsTable } from '../db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { and, asc, eq, lte, sql } from 'drizzle-orm';
+import { getTodaysDate } from './dates';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
   gameId: 0,
@@ -40,12 +41,7 @@ export const getTodaysGame = createServerFn({ method: 'GET' })
     }
 
     /** YYYY-MM-DD in server's timezone */
-    const today = new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'America/Chicago', // Central Time (CST/CDT)
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }).format(new Date());
+    const today = getTodaysDate();
 
     const games = await db
       .select()
