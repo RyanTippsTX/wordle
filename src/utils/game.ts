@@ -12,6 +12,29 @@ const fallBackGame: typeof gamesTable.$inferSelect = {
   chosenBy: 'Broken Robot',
 };
 
+const getTodaysWinner = async () => {
+  const guesses = await db
+    .select()
+    .from(guessesTable)
+    .leftJoin(gamesTable, eq(guessesTable.gameId, gamesTable.gameId))
+    .where(
+      and(
+        eq(gamesTable.date, getTodaysDate()),
+        eq(guessesTable.word, gamesTable.solution),
+        lte(guessesTable.guessNumber, 3),
+      ),
+    )
+    .orderBy(asc(guessesTable.guessedAt))
+    .limit(1);
+
+  const todaysWinner =
+    guesses.length === 0
+      ? null // no winner yet
+      : guesses[0].guesses.playerId;
+
+  return todaysWinner;
+};
+
 // export const generateNextGame = async () => {
 //   const randomWord = getRandomWord();
 //   const word = await db.insert(solutionsPoolTable).values({
@@ -23,6 +46,28 @@ const fallBackGame: typeof gamesTable.$inferSelect = {
 //   });
 //   return { game, word };
 // };
+
+export const checkEligibleForChooseTomorrowsGame = createServerFn({ method: 'GET' })
+  .validator((data: { word: string }) => data)
+  .handler(async ({ data }) => {
+    const playerId = getCookie('playerId');
+
+    if (!playerId) return false;
+
+    const isWinner = playerId === (await getTodaysWinner());
+    return isWinner;
+  });
+
+// export const chooseTomorrowsGame = createServerFn({ method: 'POST' })
+//   .validator((data: { word: string }) => data)
+//   .handler(async ({ data }) => {
+//     const playerId = getCookie('playerId');
+//     const game = await db.insert(gamesTable).values({
+//       date: new Date().toISOString(),
+//       solution: data.word,
+//     });
+//     return game;
+//   });
 
 export const getTodaysGame = createServerFn({ method: 'GET' })
   // .validator((id: string) => id)
