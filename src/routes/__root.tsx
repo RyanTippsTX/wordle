@@ -5,6 +5,9 @@ import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary';
 import { NotFound } from '~/components/NotFound';
 import appCss from '~/styles/app.css?url';
 import type { ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const faviconEmoji = [
   //
@@ -82,8 +85,10 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        {children}
-        {/* <TanStackRouterDevtools position="bottom-right" /> */}
+        <QueryClientProvider client={queryClient}>
+          {children}
+          {/* <TanStackRouterDevtools position="bottom-right" /> */}
+        </QueryClientProvider>
         <Scripts />
       </body>
     </html>
