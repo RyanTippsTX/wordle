@@ -7,9 +7,9 @@ import { getTodaysDate, getTomorrowsDate } from './dates';
 
 const fallBackGame: typeof gamesTable.$inferSelect = {
   gameId: 0,
-  date: '1999-12-31',
+  date: '2000-01-01',
   solution: 'broke',
-  chosenBy: 'Broken Robot',
+  chosenBy: 'Elon M.',
 };
 
 const getTodaysWinner = async () => {
