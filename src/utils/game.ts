@@ -35,18 +35,6 @@ const getTodaysWinner = async () => {
   return todaysWinner;
 };
 
-const checkTomorrowsWordChosen = async () => {
-  const tomorrow = getTomorrowsDate();
-  const games = await db //
-    .select()
-    .from(gamesTable)
-    .where(eq(gamesTable.date, tomorrow));
-
-  // cron generated games will NOT have a chosenBy
-  const isChosen = !!games[0]?.chosenBy;
-  return isChosen;
-};
-
 // export const generateNextGame = async () => {
 //   const randomWord = getRandomWord();
 //   const word = await db.insert(solutionsPoolTable).values({
@@ -58,6 +46,18 @@ const checkTomorrowsWordChosen = async () => {
 //   });
 //   return { game, word };
 // };
+
+const checkTomorrowsWordChosen = async () => {
+  const tomorrow = getTomorrowsDate();
+  const games = await db //
+    .select()
+    .from(gamesTable)
+    .where(eq(gamesTable.date, tomorrow));
+
+  // cron generated games will NOT have a chosenBy
+  const isChosen = !!games[0]?.chosenBy;
+  return isChosen;
+};
 
 export const checkEligibleForChooseTomorrowsGame = createServerFn({ method: 'GET' })
   .validator((data: { word: string }) => data)
