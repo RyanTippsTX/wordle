@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { isValidWord } from '~/utils/wordsValid';
 import toast from 'react-hot-toast';
-import { Route } from '~/routes/_layout/index';
+import { getRouteApi } from '@tanstack/react-router';
 import { trackGuess } from '~/utils/game';
 interface GameState {
   solution: string;
@@ -37,7 +37,8 @@ const letters = 'abcdefghijklmnopqrstuvwxyz';
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   // constants - might break at midnight
-  const todaysGame = Route.useLoaderData();
+  const routeApi = getRouteApi('/_layout/');
+  const todaysGame = routeApi.useLoaderData();
 
   const solution = todaysGame.solution;
   const chosenBy = todaysGame.chosenBy;
