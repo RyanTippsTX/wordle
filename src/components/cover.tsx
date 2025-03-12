@@ -41,7 +41,7 @@ export function Cover() {
             setIsSharing(false);
           }, 300);
         });
-    } else {
+    } else if (navigator.clipboard) {
       // Fallback to clipboard for Desktop or if Web Share API is not available
       navigator.clipboard
         .writeText(shareMessage)
@@ -56,6 +56,9 @@ export function Cover() {
             setIsSharing(false);
           }, 300);
         });
+    } else {
+      toast.error('Failed to share');
+      setIsSharing(false);
     }
   };
 
